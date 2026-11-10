@@ -1,0 +1,1610 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#15515a"><link rel="apple-touch-icon" href="icon-192.png">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#123b45">
+<title>All Operational Reports</title>
+<style>
+:root{--green:#123b45;--mint:#eaf4f1;--line:#d8e3e0;--ink:#183238;--muted:#60767b;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:#f3f7f6;color:var(--ink);font-family:system-ui,-apple-system,Arial,sans-serif}
+header{background:linear-gradient(135deg,#123b45,#1d5d63);color:white;padding:22px 16px 26px;border-radius:0 0 22px 22px}
+header h1{font-size:22px;margin:0 0 6px}header p{margin:0;color:#d8ece8;font-size:13px}
+main{max-width:760px;margin:0 auto;padding:14px}
+.section{background:white;border:1px solid var(--line);border-radius:16px;margin:12px 0;padding:14px;box-shadow:0 3px 12px #18323808}
+.section h2{font-size:16px;margin:0 0 12px;color:#15515a}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}
+input,textarea{width:100%;padding:11px 10px;border:1px solid #cbdad7;border-radius:10px;background:#fbfdfc;color:var(--ink);font-size:16px;direction:ltr;text-align:left}
+textarea{min-height:76px}
+.result{background:var(--mint);border-radius:10px;padding:10px;margin-top:10px;display:flex;justify-content:space-between;gap:10px;font-size:13px}
+.result strong{direction:ltr}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 24px}
+button{border:0;border-radius:12px;padding:13px;font-size:15px;font-weight:700;cursor:pointer}
+.primary{background:var(--green);color:white}.secondary{background:#dfece8;color:#17444b}
+.note{font-size:12px;color:var(--muted);line-height:1.6}
+.stop{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fbfdfc}.stop .full{grid-column:1/-1}.stop input[readonly]{background:var(--mint);font-weight:700}.chem{margin-bottom:12px}.chem h3{font-size:14px;margin:0 0 6px;color:#15515a}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.out{background:var(--mint);border-radius:10px;padding:11px 10px;font-size:16px;font-weight:700;min-height:46px;display:flex;align-items:center;direction:ltr}
+.stop button{padding:11px 13px;background:#f6dede;color:#8a2a2a}
+.sc{margin-bottom:10px}.sc .result{margin:0;flex-direction:column;justify-content:center}
+.bad{color:#b32222}
+.old{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+.old span{direction:ltr}.old button{padding:8px 12px;font-size:13px;margin-inline-start:4px}
+.sign{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:26px 0 10px;font-size:13px}
+.sign div{direction:ltr;text-align:left}
+@media(max-width:420px){header h1{font-size:20px}}
+@media print{.sign input{border:0;border-bottom:1px solid #000;border-radius:0;background:#fff}.sign input::placeholder{color:transparent}body{background:#fff}header{border-radius:0}.actions,.noprint,#scMain,.stop button,.tabs,.who,#loginBox,#mtMain,#syncMain,#mgMain,#adMain{display:none!important}.section{box-shadow:none;break-inside:avoid}}
+[hidden]{display:none!important}
+.tabs{display:flex;gap:8px;padding:12px 14px 0;max-width:760px;margin:0 auto}.tabs button,.subs button{flex:1;padding:11px 4px;font-size:14px;background:#dfece8;color:#17444b}.tabs button.on,.subs button.on{background:var(--green);color:#fff}
+.subs{display:flex;gap:6px;margin:12px 0 0}.sm{padding:8px 12px!important;font-size:13px!important}
+.mr{display:flex;justify-content:space-between;gap:10px;background:var(--mint);border-radius:10px;padding:11px 12px;margin-bottom:6px;font-size:13px}.mr b{text-align:right;direction:ltr}
+.ok{color:#1d7a4f}.warn{color:#b9770e}.mc{border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px;background:#fbfdfc}
+.mrec{display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer}.mrec small{color:var(--muted);line-height:1.5}
+.chem .chn{font-weight:700;color:#15515a;background:#f3f9f7;margin-bottom:6px}
+.mgc{border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px;background:#fbfdfc}.mgh{display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer}.mgs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}.mgs div{background:var(--mint);border-radius:8px;padding:6px 4px;text-align:center;font-size:11px;color:#4b6b5d}.mgs b{display:block;font-size:14px;color:#14352a}.mgd{margin-top:10px;font-size:13px}.mgd h4{margin:10px 0 4px;color:#15515a;font-size:13px}
+.lgbox{position:fixed;inset:0;background:linear-gradient(160deg,#0f2f36,#1f6b5a);z-index:50;overflow:auto;padding:16px}.lgcard{background:#fff;border-radius:16px;max-width:380px;margin:40px auto;padding:20px}
+.who{display:flex;gap:8px;align-items:center;padding:8px 14px 0;max-width:760px;margin:0 auto;font-size:13px}.who span{white-space:nowrap}.who select{flex:1;padding:8px;min-width:0}
+.mx{background:#f6dede!important;color:#8a2a2a!important}.mal{background:#fdecea;color:#b32222;border-radius:10px;padding:11px 12px;margin-bottom:6px;font-size:13px}.mal.w{background:#fff3df;color:#b9770e}
+.mmodal{position:fixed;inset:0;background:#0007;display:flex;align-items:flex-end;justify-content:center;z-index:9}.mbox{background:#fff;width:100%;max-width:520px;border-radius:18px 18px 0 0;padding:16px;max-height:92vh;overflow:auto}
+.mbtns{display:flex;gap:8px;margin-top:14px}.mbtns button{flex:1}
+#scMain *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+#scMain .wrap{max-width:480px;margin:0 auto;padding:12px}
+#scMain .card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+#scMain label{display:block;font-size:13px;font-weight:bold;margin:10px 0 4px;color:#44546a}
+#scMain input,#scMain select{width:100%;padding:12px;font-size:18px;border:1px solid #b8c2cc;border-radius:8px;background:#fff}
+#scMain button{width:100%;padding:13px;font-size:16px;font-weight:bold;border:0;border-radius:8px;margin-top:12px;color:#fff}
+#scMain .b-add{background:#2e7d32}
+#scMain .b-clear{background:#c62828}
+#scMain .result{text-align:center;font-size:22px;font-weight:bold;padding:12px;margin-top:12px;border-radius:8px;background:#e8f1fb;color:#1f4e79}
+#scMain .totalbox{text-align:center;font-size:20px;font-weight:bold;padding:12px;margin-top:8px;border-radius:8px;background:#1f4e79;color:#fff}
+#scMain .totalbox small{display:block;font-size:12px;font-weight:normal;opacity:.85}
+#scMain .acts{display:flex;gap:8px;margin-top:6px}
+#scMain .acts button{margin:0;padding:8px;font-size:14px}
+#scMain .a1{background:#1f4e79}
+#scMain .a2{background:#c62828}
+#scMain .item{border-bottom:1px solid #e1e6eb;padding:10px 0;font-size:14px;position:relative}
+#scMain .item:last-child{border-bottom:0}
+#scMain .item .d{font-weight:bold;color:#c62828;font-size:16px}
+#scMain .item .x{position:absolute;right:0;top:8px;background:none;color:#c62828;width:auto;margin:0;padding:4px 8px;font-size:20px}
+#scMain .empty{text-align:center;color:#8896a5;padding:10px}
+#scMain h3{margin:0 0 6px;font-size:16px}
+#scMain #scOv{display:none;position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:99;align-items:center;justify-content:center;padding:20px}
+#scMain #scBox{background:#fff;border-radius:12px;padding:18px;width:100%;max-width:340px;text-align:center}
+#scMain #scBox p{margin:0 0 6px;font-size:17px;font-weight:bold}
+#scMain #scBox .r{display:flex;gap:8px}
+#scMain #scBox .r button{margin-top:10px}
+#scMain #scListOv{display:none;position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:98;align-items:flex-end;justify-content:center}
+#scMain #scListBox{background:#fff;width:100%;max-width:480px;max-height:88vh;border-radius:16px 16px 0 0;display:flex;flex-direction:column;overflow:hidden}
+#scMain .lh{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #e1e6eb}
+#scMain .lh b{font-size:17px;color:#1f4e79}
+#scMain .lh button{width:auto;margin:0;padding:4px 12px;background:#eceff3;color:#333;font-size:18px}
+#scMain #scList{overflow-y:auto;padding:4px 16px 18px;-webkit-overflow-scrolling:touch}
+#scMain .dayh{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:#e8f0f7;color:#1f4e79;font-weight:bold;font-size:15px;padding:12px 12px;border-radius:10px;margin:10px 0 0}
+#scMain .daybody{padding:0 2px 4px}
+#scMain .dayh span:last-child{color:#c62828}
+#scMain #scToast{display:none;position:fixed;left:16px;right:16px;bottom:24px;background:#333;color:#fff;padding:12px;border-radius:8px;text-align:center;z-index:100;font-size:15px}
+#scMain .sctabs{display:flex;gap:8px;padding:10px 12px 0;max-width:480px;margin:0 auto}
+#scMain .sctabs button{margin:0;padding:12px;font-size:15px;background:#fff;color:#1f4e79;border:2px solid #1f4e79}
+#scMain .sctabs button.on{background:#1f4e79;color:#fff}
+#scMain .tbox{border:1px solid #b9c3cd;border-radius:8px;overflow:hidden;margin-bottom:8px;background:#fff}
+#scMain .tbox .hd,#scMain .tbox .in{display:flex}
+#scMain .tbox .hd div{flex:1;text-align:center;font-weight:600;padding:7px 0;border-bottom:1px solid #b9c3cd;font-size:12px;color:#44546a;background:#f5f7fa}
+#scMain .tbox .in input{flex:1;min-width:0;width:33.3%;border:0;border-right:1px solid #b9c3cd;border-radius:0;padding:10px 10px;font-size:15px}
+#scMain .tbox .in input:last-child{border-right:0}
+#scMain .oprow{display:flex;justify-content:center;align-items:center;gap:8px;margin:4px 0 8px}
+#scMain .oprow .rm{width:auto;margin:0;padding:7px 10px;background:#c62828;font-size:12px;border-radius:6px}
+#scMain .calcbtn{background:#ffcc33;color:#222;border:1px solid #c9a000;border-bottom:3px solid #e07020;font-size:15px;padding:11px;border-radius:8px}
+#scMain .addnew{background:#fff;color:#666;border:1px solid #b9c3cd;font-size:14px;font-weight:normal;padding:11px;border-radius:8px}
+#scMain #scTres{background:#fff;font-size:15px;border:1px solid #b9c3cd;margin-top:6px;padding:10px;border-radius:8px}
+#scMain .opwrap{position:relative;width:96px}
+#scMain .opbox{height:38px;border:1px solid #b9c3cd;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 16px;font-size:18px;color:#222}
+#scMain .arr{width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid #777}
+#scMain .oppop{display:none;position:absolute;left:0;top:0;width:54px;background:#fff;border-radius:4px;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:50}
+#scMain .oppop div{height:38px;line-height:38px;text-align:center;font-size:20px;color:#222}
+#scMain .oppop div:active{background:#eee}
+#scMain .seg{display:flex;gap:8px;margin:0 0 6px}
+#scMain .seg button{margin:0;padding:8px;font-size:14px;background:#fff;color:#1f4e79;border:1px solid #1f4e79}
+#scMain .seg button.on{background:#1f4e79;color:#fff}
+.sctabs{display:flex;gap:8px;padding:10px 12px 0;max-width:480px;margin:0 auto}
+.hdr2{display:grid;grid-template-columns:110px 1fr;gap:8px;margin-top:12px}.hdr2 label{color:#d8ece8;margin-bottom:4px}.hdr2 input{background:#ffffff1f;border:1px solid #ffffff66;color:#fff;font-weight:700}.hdr2 input::placeholder{color:#ffffff99;font-weight:400}
+.tabs button{font-size:13px;padding:10px 2px;line-height:1.2}
+.mpick{position:relative}.mshow{white-space:nowrap;padding:11px 10px;border:1px solid #cbdad7;border-radius:10px;background:#fbfdfc;font-size:16px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:6px;min-height:46px}.mshow small{color:var(--muted);font-weight:400}.mshow .car{margin-left:auto;color:var(--muted)}.mpick input{position:absolute;inset:0;width:100%;height:100%;opacity:0;padding:0;cursor:pointer;font-size:16px}
+
+/* ---- Running Log tab ---- */
+.tabs{overflow-x:auto;-webkit-overflow-scrolling:touch}.tabs button{flex:1 0 auto;white-space:nowrap;padding:10px 12px}
+#rlMain{max-width:1100px}
+#rlMain .note{margin:8px 0 0}
+#rlMain .tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;-webkit-overflow-scrolling:touch}
+#rlMain table{border-collapse:separate;border-spacing:0;min-width:1180px;width:100%;font-size:13px}
+#rlMain th,#rlMain td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:0;text-align:center}
+#rlMain thead th{background:var(--green);color:#fff;font-weight:700;padding:8px 4px;font-size:12px;letter-spacing:.2px;position:sticky;top:0;z-index:2}
+#rlMain thead tr.g2 th{background:#1d5d63;font-size:11px;font-weight:600}
+#rlMain th:last-child,#rlMain td:last-child{border-right:0}
+#rlMain td.dt{position:sticky;left:0;background:#f6faf9;z-index:1;font-weight:700;color:#15515a;min-width:100px;padding:0 6px;white-space:nowrap}
+#rlMain .dtc{display:flex;align-items:center;justify-content:space-between;gap:4px}#rlMain .rlbs{display:flex;gap:3px}
+#rlMain select{width:100%;padding:11px;font-size:16px;border:1px solid var(--line);border-radius:10px;background:#fff}
+#rlMain .rlb{padding:0;width:22px;height:22px;border-radius:6px;font-size:15px;line-height:1;background:#dfece8;color:#17444b}#rlMain .rlb[data-act=del]{background:#f6dede;color:#8a2a2a}
+#rlMain thead th.dt{position:sticky;left:0;z-index:3;background:var(--green)}
+#rlMain tbody tr:nth-child(even) td{background:#fbfdfc}#rlMain tbody tr:nth-child(even) td.dt{background:#eef6f4}
+#rlMain td input{border:0;border-radius:0;background:transparent;padding:9px 4px;font-size:14px;text-align:center;width:100%;min-width:0}
+#rlMain td input:focus{outline:2px solid #1d5d63;outline-offset:-2px;background:#fff}
+#rlMain td.tm input{min-width:86px}#rlMain td.nm input{min-width:78px}#rlMain td.hm input{min-width:70px}#rlMain td.rm input{text-align:left;min-width:190px;padding-left:8px}
+#rlMain td.td{background:var(--mint)!important;font-weight:700;color:#15515a;min-width:74px;padding:0 6px;white-space:nowrap}
+#rlMain input.bad{background:#f6dede!important}
+#rlMain tfoot td{background:var(--mint);font-weight:700;color:#15515a;padding:10px 6px;border-top:2px solid #1d5d63;white-space:nowrap}#rlMain tfoot td.dt{background:#dcebe7}
+#rlMain .rlhd{display:flex;flex-wrap:nowrap;gap:6px;margin-bottom:10px}
+#rlMain .rlhd label{font-size:11px;margin-bottom:2px}
+#rlMain .rlhd input{padding:5px 6px;font-size:13px;border-radius:8px;font-weight:700}
+@page rl{size:A4 landscape;margin:8mm}
+@media print{
+ #rlMain{page:rl;max-width:none;padding:6px}
+ body.rlTab header{background:#fff;color:#000;border-bottom:2px solid #000;border-radius:0}
+ body.rlTab header h1{color:#000}body.rlTab .hdr2 label{color:#000}
+ body.rlTab .hdr2 input{border:0;border-bottom:1px solid #000;border-radius:0;background:#fff;color:#000}
+ #rlMain .section{box-shadow:none;border:0;padding:0;margin:6px 0}
+ #rlMain .tw{overflow:visible;border:0}
+ #rlMain table{min-width:0;font-size:9px;border:1px solid #000}
+ #rlMain th,#rlMain td{border-color:#000!important}
+ #rlMain thead th{background:#d9d9d9!important;color:#000!important;position:static;padding:3px 2px;font-size:9px}
+ #rlMain td.dt,#rlMain thead th.dt{position:static}
+ #rlMain td input{padding:2px 1px;font-size:9px;min-width:0!important}
+ #rlMain td.td,#rlMain tfoot td{background:#fff!important}
+ #rlMain .mshow{border:0;padding:0;font-size:13px}#rlMain .mshow .car{display:none}
+ #rlMain .grid input,#rlMain .rlhd input{border:0;border-bottom:1px solid #000;border-radius:0;background:#fff;padding:2px}
+ #rlMain label{color:#000}
+}
+</style>
+</head>
+<body>
+<header>
+<h1>All Operational Reports</h1>
+<div class="hdr2"><div><label>Genset</label><input id="hOgr" type="text" placeholder="e.g. OGR-417" autocomplete="off"></div><div><label>Location</label><input id="hLoc" type="text" placeholder="e.g. Site / Plant name" autocomplete="off"></div></div>
+</header>
+<div class="who noprint"><span id="whoTxt"></span><select id="engSel"></select><button class="secondary sm" onclick="doLogout()">Logout</button></div>
+<nav class="tabs noprint"><button id="tbR" class="on" onclick="showTab('R')">Daily Report</button><button id="tbL" onclick="showTab('L')">15 Days</button><button id="tbN" onclick="showTab('N')">Monthly Report</button><button id="tbM" onclick="showTab('M')">Maintenance</button><button id="tbT" onclick="showTab('T')">Stoppage</button><button id="tbS" onclick="showTab('S')">⟳ Sync</button><button id="tbG" onclick="showTab('G')" hidden>Manager</button><button id="tbA" onclick="showTab('A')" hidden>Admin</button></nav>
+<div id="loginBox" class="lgbox"><div class="lgcard"><h1 style="font-size:22px;margin:0 0 4px;color:#15515a">Plant Fleet</h1><p class="note" style="margin:0 0 10px">Apni ID aur password se login karo</p>
+<label>ID</label><input id="lgId" type="text" autocapitalize="none" autocomplete="username"><label style="margin-top:8px">Password</label><input id="lgPw" type="password" autocomplete="current-password">
+<button class="primary" style="width:100%;margin-top:14px" onclick="doLogin()">Login</button><p id="lgMsg" class="bad" style="min-height:20px;margin:8px 0 0"></p>
+<details style="margin-top:8px"><summary>Server setup</summary><label>Database URL</label><input id="lgUrl" type="text" placeholder="https://xxxx-default-rtdb.firebaseio.com"><label style="margin-top:8px">Web API Key</label><input id="lgKey" type="text"><button class="secondary" style="width:100%;margin-top:10px" onclick="doBootstrap()">Pehla Admin account banao</button><p class="note">Ye sirf ek baar, jab Firebase me abhi koi user nahi. Upar ID aur password likh kar dabao.</p></details></div></div>
+<main id="repMain">
+<div class="section">
+<div class="grid">
+<div><label>Report Date</label><input id="date" type="date"></div>
+<div><label>Maximum Load (kW)</label><input id="maxLoad" type="number" value="1400" step="any"></div>
+</div>
+</div>
+<section class="section">
+<h2>Daily Plant Report — 24 Hours</h2>
+<div class="grid">
+<div><label>Present Meter Reading (kWh)</label><input id="genNow" type="number"></div>
+<div><label>Previous Meter Reading (kWh)</label><input id="genPrev" type="number"></div>
+<div><label>Present Running Hours</label><input id="runNow" type="number"></div>
+<div><label>Previous Running Hours</label><input id="runPrev" type="number"></div>
+<div><label>Present Starts</label><input id="startNow" type="number"></div>
+<div><label>Previous Starts</label><input id="startPrev" type="number"></div>
+<div><label>Present Gas Meter (m³)</label><input id="gasNow" type="number" placeholder="If meter is available"></div>
+<div><label>Previous Gas Meter (m³)</label><input id="gasPrev" type="number" placeholder="If meter is available"></div>
+<div><label>Current Tank Reading (L)</label><input id="oilNow" type="number"></div>
+<div><label>Previous Tank Reading (L)</label><input id="oilPrev" type="number"></div>
+<div><label>Oil Added (L)</label><input id="oilAdded" type="number" value="0"></div>
+<div><label>Oil Consumed (L)</label><input id="oilUsed" type="number" step="any"></div>
+<div><label>Total Top-up After Oil Change (L)</label><input id="oilTopup" type="number" placeholder="Optional"></div>
+</div>
+<div class="result"><span>Generation (kWh)</span><strong id="generation">—</strong></div>
+<div class="result"><span>Average Load (kW)</span><strong id="avgLoad">—</strong></div>
+<div class="result"><span>Plant Loading (%)</span><strong id="loadFactor">—</strong></div>
+<div class="result"><span>Plant Availability (HH:MM)</span><strong id="availability">24:00</strong></div>
+<div class="result"><span>Total Stoppage</span><strong id="totalStop">00:00</strong></div>
+<div class="result"><span>Plant Availability (%)</span><strong id="availabilityPct">100.00%</strong></div>
+<div class="result"><span>Gas Used (m³)</span><strong id="gasUsed">—</strong></div>
+<div class="result"><span>Gas Used per kWh</span><strong id="gasPerKwh">—</strong></div>
+<div class="result"><span>Running Hours Difference</span><strong id="runDiff">—</strong></div>
+<div class="result"><span>Starts Difference</span><strong id="startDiff">—</strong></div>
+<div class="result"><span>Consumption (g/kWh)</span><strong id="oilPerKwh">—</strong></div>
+</section>
+<section class="section">
+<h2>Stoppage Report</h2>
+<div id="stops"></div>
+<button class="secondary noprint" style="width:100%" onclick="addStop()">+ Add Stoppage</button>
+</section>
+<section class="section">
+<h2>Chemical Consumption</h2>
+<div id="ch"></div>
+</section>
+<section class="section">
+<h2>Operational Remarks</h2>
+<textarea id="remarks"></textarea>
+</section>
+<div class="sign"><div><label>Report Prepared By</label><input id="prepBy" type="text" placeholder="Enter name"></div><div><label>Supervisor Signature</label><input id="supBy" type="text" placeholder="Name / signature"></div></div>
+<div class="actions">
+<button class="primary" onclick="saveReport()">Save Report</button>
+<button class="secondary" onclick="exportCsv()">Export Excel (Aaj ki)</button>
+<button class="secondary" onclick="exportPdf()">Download PDF</button>
+<button class="secondary" onclick="window.print()">Print</button>
+<button class="primary" style="grid-column:1/-1" onclick="exportAll()">Saari Reports Excel me (Date-wise)</button>
+<button class="secondary" style="grid-column:1/-1" onclick="resetReport()">Clear / New Report</button>
+</div>
+<section class="section noprint">
+<h2>Previous Reports</h2>
+<div id="oldList"></div>
+</section>
+<section class="section noprint">
+<h2>Backup and Restore</h2>
+<div class="grid">
+<button class="secondary" onclick="backup()">Download Backup</button>
+<button class="secondary" onclick="$('restoreFile').click()">Restore Backup</button>
+</div>
+<input id="restoreFile" type="file" accept=".json" style="display:none" onchange="restore(this)">
+<p class="note">Reports are stored in this phone's browser. Take a backup before changing phones.</p>
+</section>
+</main>
+<main id="rlMain" hidden>
+<section class="section">
+<h2>Fortnightly Generation Report</h2>
+<div class="rlhd">
+<div style="flex:1.4 1 0;min-width:0"><label>Genset</label><input id="rlOgr" type="text" autocomplete="off"></div>
+<div style="flex:1 1 0;min-width:0"><label>Model</label><input id="rlModel" type="text" autocomplete="off"></div>
+<div style="flex:1 1 0;min-width:0"><label>Rating</label><input id="rlRating" type="text" autocomplete="off"></div>
+<div style="flex:1.2 1 0;min-width:0"><label>Rental ID</label><input id="rlRent" type="text" autocomplete="off"></div>
+</div>
+<div class="grid">
+<div style="grid-column:1/-1"><label>Report Period</label><div class="mpick"><div class="mshow" id="rlPeriod"></div><input id="rlMonth" type="month"></div></div>
+<div class="noprint" style="grid-column:1/-1"><select id="rlHalf"><option value="1">1 to 15</option><option value="2">16 to End of Month</option></select></div>
+<div><label>Current SMU</label><input id="rlCur" type="number" step="any" inputmode="decimal"></div>
+<div><label>Previous SMU</label><input id="rlPrev" type="number" step="any" inputmode="decimal"></div>
+</div>
+</section>
+<section class="section">
+<h2>15 Days</h2>
+<button class="secondary noprint" style="width:100%;margin-bottom:10px" onclick="RL.syncBtn()">↻ Refresh from Stoppage</button>
+<div class="tw">
+<table id="rlTable">
+<thead>
+<tr>
+<th rowspan="2" class="dt">DATE</th>
+<th colspan="2">TIME</th>
+<th colspan="2">SMU</th>
+<th colspan="2">MW HOURS</th>
+<th colspan="2">LOAD kW</th>
+<th colspan="2">STOPPAGE TIME</th>
+<th rowspan="2">TOTAL<br>DOWNTIME</th>
+<th rowspan="2">REMARKS</th>
+</tr>
+<tr class="g2">
+<th>START</th><th>STOP</th>
+<th>START</th><th>STOP</th>
+<th>START</th><th>STOP</th>
+<th>(MIN)</th><th>(MAX)</th>
+<th>CUSTOMER</th><th>GENERATOR</th>
+</tr>
+</thead>
+<tbody id="rlBody"></tbody>
+<tfoot><tr><td class="dt">TOTAL</td><td colspan="8"></td><td id="rlTotC">00:00</td><td id="rlTotG">00:00</td><td id="rlTotD">00:00</td><td></td></tr></tfoot>
+</table>
+</div>
+
+<div class="result"><span>TOTAL HOURS</span><strong id="rlTotHrs">00:00</strong></div>
+<div class="result"><span>Out of (hours)</span><strong id="rlOutOf">720</strong></div>
+<div class="result"><span>TOTAL STOPPAGE</span><strong id="rlTotStop">00:00</strong></div>
+
+</section>
+<div class="actions noprint">
+<button class="primary" onclick="RL.save()">Save Log</button>
+<button class="secondary" onclick="RL.excel()">Export Excel</button>
+<button class="secondary" onclick="window.print()">Print</button>
+<button class="secondary" onclick="RL.reset(this)">Clear</button>
+</div>
+<section class="section noprint">
+<h2>Saved Logs</h2>
+<div id="rlOld"></div>
+</section>
+</main>
+<main id="moMain" hidden>
+<div class="section">
+<div class="grid" style="grid-template-columns:1.6fr 1fr">
+<div><label>Report Period (tap karo)</label><div class="mpick"><div class="mshow" id="mo_period"></div><input id="mo_date" type="month"></div></div>
+<div><label>Maximum Load (kW)</label><input id="mo_maxLoad" type="number" value="1400" step="any"></div>
+</div>
+</div>
+<section class="section">
+<h2>Monthly Report — One Month</h2>
+<p class="note" id="mo_autoNote" style="margin:0 0 8px"></p><button class="secondary" style="width:100%;margin-bottom:12px" onclick="MON.auto()">⟳ Daily Reports se Auto Bharo</button>
+<div class="grid">
+<div><label>Present Meter Reading (kWh)</label><input id="mo_genNow" type="number"></div>
+<div><label>Previous Meter Reading (kWh)</label><input id="mo_genPrev" type="number"></div>
+<div><label>Present Running Hours</label><input id="mo_runNow" type="number"></div>
+<div><label>Previous Running Hours</label><input id="mo_runPrev" type="number"></div>
+<div><label>Present Starts</label><input id="mo_startNow" type="number"></div>
+<div><label>Previous Starts</label><input id="mo_startPrev" type="number"></div>
+<div><label>Present Gas Meter (m³)</label><input id="mo_gasNow" type="number" placeholder="If meter is available"></div>
+<div><label>Previous Gas Meter (m³)</label><input id="mo_gasPrev" type="number" placeholder="If meter is available"></div>
+<div><label>Current Tank Reading (L)</label><input id="mo_oilNow" type="number"></div>
+<div><label>Previous Tank Reading (L)</label><input id="mo_oilPrev" type="number"></div>
+<div><label>Oil Added (L)</label><input id="mo_oilAdded" type="number" value="0"></div>
+<div><label>Oil Consumed (L)</label><input id="mo_oilUsed" type="number" step="any"></div>
+<div><label>Total Top-up After Oil Change (L)</label><input id="mo_oilTopup" type="number" placeholder="Optional"></div>
+</div>
+<div class="result"><span>Generation (kWh)</span><strong id="mo_generation">—</strong></div>
+<div class="result"><span>Average Load (kW)</span><strong id="mo_avgLoad">—</strong></div>
+<div class="result"><span>Plant Loading (%)</span><strong id="mo_loadFactor">—</strong></div>
+<div class="result"><span>Plant Availability (HH:MM)</span><strong id="mo_availability">24:00</strong></div>
+<div class="result"><span>Total Stoppage</span><strong id="mo_totalStop">00:00</strong></div>
+<div class="result"><span>Plant Availability (%)</span><strong id="mo_availabilityPct">100.00%</strong></div>
+<div class="result"><span>Gas Used (m³)</span><strong id="mo_gasUsed">—</strong></div>
+<div class="result"><span>Gas Used per kWh</span><strong id="mo_gasPerKwh">—</strong></div>
+<div class="result"><span>Running Hours Difference</span><strong id="mo_runDiff">—</strong></div>
+<div class="result"><span>Starts Difference</span><strong id="mo_startDiff">—</strong></div>
+<div class="result"><span>Consumption (g/kWh)</span><strong id="mo_oilPerKwh">—</strong></div>
+</section>
+<section class="section">
+<h2>Stoppage Report</h2>
+<div id="mo_stops"></div>
+<button class="secondary noprint" style="width:100%" onclick="MON.addStop()">+ Add Stoppage</button>
+</section>
+<section class="section">
+<h2>Chemical Consumption</h2>
+<div id="mo_ch"></div>
+</section>
+<section class="section">
+<h2>Operational Remarks</h2>
+<textarea id="mo_remarks"></textarea>
+</section>
+<div class="sign"><div><label>Report Prepared By</label><input id="mo_prepBy" type="text" placeholder="Enter name"></div><div><label>Supervisor Signature</label><input id="mo_supBy" type="text" placeholder="Name / signature"></div></div>
+<div class="actions">
+<button class="primary" onclick="MON.save()">Save Report</button>
+<button class="secondary" onclick="MON.exportCsv()">Export Excel</button>
+<button class="secondary" onclick="MON.exportPdf()">Download PDF</button>
+<button class="secondary" onclick="window.print()">Print</button>
+<button class="secondary" style="grid-column:1/-1" onclick="MON.reset()">Clear / New Report</button>
+</div>
+<section class="section noprint">
+<h2>Previous Monthly Reports</h2>
+<div id="mo_oldList"></div>
+</section>
+
+</main>
+<main id="mtMain" hidden>
+<div class="section"><div class="grid"><div><label>Genset Name</label><input id="mGn" type="text"></div><div><label>Current Running Hours (Daily Report Present)</label><input id="mRh" type="text" readonly placeholder="Daily Report me Present bharo"></div></div></div>
+<div class="subs noprint"><button class="on" data-m="mOv">Overview</button><button data-m="mRec">Maintenance</button><button data-m="mSp">Set Points</button></div>
+<section id="mOv"></section>
+<section id="mRec" hidden><div class="section"><h2 style="display:flex;justify-content:space-between;align-items:center">Maintenance Records <button class="primary sm" onclick="MT.openM()">+ Add</button></h2><div id="mList"></div></div><button class="primary" style="width:100%;margin-bottom:10px" onclick="MT.openM()">+ Add Activity</button><button class="secondary" style="width:100%;margin-bottom:10px" onclick="MT.xls()">Download Maintenance Excel</button></section>
+<section id="mSp" hidden></section>
+<section class="section noprint"><h2>Backup and Restore</h2><div class="grid"><button class="secondary" onclick="backup()">Download Backup</button><button class="secondary" onclick="$('restoreFile2').click()">Restore Backup</button></div><input id="restoreFile2" type="file" accept=".json" style="display:none" onchange="restore(this)"><p class="note">Backup me Daily Reports aur Maintenance data dono aate hain.</p></section>
+<div class="mmodal" id="mMd" hidden><div class="mbox"><h2 style="margin:0 0 8px;font-size:16px;color:#15515a">Activity / Maintenance Record</h2>
+<label>Title / Work done</label><input id="mf_t" type="text" placeholder="e.g. 3300 hrs maintenance">
+<div class="grid" style="margin-top:8px"><div><label>Date</label><input id="mf_d" type="date"></div><div><label>&nbsp;</label><span></span></div></div>
+<div class="grid" style="margin-top:8px"><div><label>Previous hours</label><input id="mf_p" type="number" step="any" inputmode="decimal"></div><div><label>Present hours</label><input id="mf_r" type="number" step="any" inputmode="decimal"></div></div>
+<label style="margin-top:8px">Note (kuch bhi likho)</label><textarea id="mf_n"></textarea>
+<div class="mbtns"><button class="mx" id="mf_x" onclick="MT.delRec(this)">Delete</button><button class="secondary" onclick="MT.closeM()">Cancel</button><button class="primary" onclick="MT.saveM()">Save</button></div></div></div>
+</main>
+<main id="syncMain" hidden>
+<div class="section" id="syncSec"><h2>Online Sync</h2><button class="primary" style="width:100%" onclick="syncNow()">⟳ Sync Now</button><p class="note" id="sStat">Abhi sync nahi hua.</p><p class="note">Entry se pehle Sync karo, entry ke baad Save karo (Save par auto sync hota hai). Ek hi din ki report do log alag bharenge to jis ne baad me Save kiya uska data rahega.</p></div>
+<div class="section" id="mergeSec"><h2>Offline Sync (file se)</h2><div class="grid"><button class="secondary" onclick="backup()">Share Data File</button><button class="secondary" onclick="$('mergeFile').click()">Merge Data File</button></div><input id="mergeFile" type="file" accept=".json" style="display:none" onchange="mergeFile(this)"><p class="note">Internet na ho to Data File WhatsApp se bhejo. Samne wala Merge karega to dono ka naya data mil jayega.</p></div>
+<div class="section"><h2>Password badlo</h2><label>Naya password (kam az kam 6 akshar)</label><input id="npw" type="password"><button class="secondary" style="width:100%;margin-top:10px" onclick="chPw()">Password badlo</button><p class="note" id="pwMsg"></p></div>
+</main>
+<main id="scMain" hidden>
+
+
+<div class="sctabs">
+  <button id="scTabStop" class="on" onclick="SC.scTab('stop')">Stoppage</button>
+  <button id="scTabTime" onclick="SC.scTab('time')">Time Calculator</button>
+</div>
+
+<div id="scPageStop">
+<div class="wrap">
+
+  <div class="card">
+    <div class="seg">
+      <button id="scMStop" class="on" onclick="SC.setMode('Stop')">Stop</button>
+      <button id="scMTrip" onclick="SC.setMode('Tripped')">Tripped</button>
+    </div>
+    <label>Date</label>
+    <div style="display:flex;gap:8px;align-items:center"><input type="date" id="scDate" style="flex:1;min-width:0;padding:6px 10px;height:36px;font-size:14px;border-radius:8px"><button type="button" class="secondary" style="width:auto;flex:none;padding:0 14px;height:36px;font-size:14px;border-radius:8px" onclick="SC.clearDate()">Today</button></div>
+
+    <label id="scStopLbl">Genset Stop Time</label>
+    <input type="text" id="scStop" inputmode="numeric" maxlength="5" placeholder="HH:MM" autocomplete="off">
+
+    <label>Genset Start Time</label>
+    <input type="text" id="scStart" inputmode="numeric" maxlength="5" placeholder="HH:MM" autocomplete="off">
+
+    <label>RH</label>
+    <input type="text" id="scRh" inputmode="decimal" placeholder="Running hours (RH)" autocomplete="off">
+
+    <label>MWH</label>
+    <input type="text" id="scMwh" inputmode="decimal" placeholder="MWH reading" autocomplete="off">
+
+    <label>Reason</label>
+    <select id="scReason">
+      <option value="">-- Select reason --</option>
+      <option>Customer Demand</option>
+      <option>K.E Failure</option>
+      <option>Over load short circuit</option>
+      <option>Knocking Failure</option>
+      <option>Gas Pressure low</option>
+      <option>Ignition System Failure</option>
+      <option>Stand by Position</option>
+      <option>Starter relay faulty</option>
+      <option>Gas prop valve Gas pre-press</option>
+      <option value="__other__">Other (type manually)...</option>
+    </select>
+    <input type="text" id="scReasonText" placeholder="Enter reason" style="display:none;margin-top:8px" autocomplete="off">
+
+    <div class="totalbox"><small id="scGrandLbl">Total Stoppage (Today)</small><span id="scGrand">0 hr 0 min</span></div>
+    <button class="b-add" onclick="SC.addEntry()">Add to Total</button>
+  </div>
+
+  <div class="card">
+    <h3>Message</h3>
+    <textarea id="scMsg" rows="9" style="width:100%;padding:12px;font-size:16px;border:1px solid #b8c2cc;border-radius:8px;font-family:Arial,sans-serif"></textarea>
+    <button class="b-add" style="background:#1f4e79" onclick="SC.copyMsg()" id="scCopyBtn">Copy Message</button>
+  </div>
+
+  <div class="card">
+    <h3>Stoppage List</h3>
+    <button class="b-add" id="scListBtn" style="background:#1f4e79" onclick="SC.openList()">Stoppage List (0)</button>
+    <button class="b-add" onclick="SC.exportXls()">Excel Download</button>
+    <button class="b-clear" onclick="SC.clearAll()">Clear All</button>
+  </div>
+</div>
+
+</div>
+
+<div id="scPageTime" style="display:none">
+<div class="wrap">
+  <div class="card">
+    <div id="scTrows"></div>
+    <button class="addnew" onclick="SC.addTimeRow()">Add New Time</button>
+    <button class="calcbtn" onclick="SC.calcTime()">Calculate</button>
+  </div>
+  <div class="card">
+    <div style="font-size:15px;font-weight:600;color:#44546a">Result :</div>
+    <input type="text" id="scTres" readonly>
+  </div>
+</div>
+</div>
+
+<div id="scListOv" onclick="if(event.target===this)SC.closeList()"><div id="scListBox"><div class="lh"><b>Stoppage List</b><button onclick="SC.closeList()">&#10005;</button></div><div id="scList"></div></div></div>
+<div id="scOv"><div id="scBox"><p id="scBoxTxt"></p><div class="r"><button style="background:#888" onclick="SC.boxNo()">Cancel</button><button style="background:#c62828" onclick="SC.boxYes()">Delete</button></div></div></div>
+<div id="scToast"></div>
+
+
+</main>
+<main id="mgMain" hidden>
+<div class="section"><h2 style="display:flex;justify-content:space-between;align-items:center">Fleet Summary <button class="primary sm" onclick="mgRefresh()">⟳ Refresh</button></h2><button class="secondary" style="width:100%;margin-bottom:8px" onclick="mgExcel()">Fleet Excel Download (sab engines)</button><p class="note" id="mgStat"></p><div id="mgList"></div></div>
+</main>
+<main id="adMain" hidden>
+<div class="section"><h2 style="display:flex;justify-content:space-between;align-items:center">Engines <button class="primary sm" onclick="adLoad()">⟳ Refresh</button></h2><p class="note" id="adStat"></p><div id="adEng"></div>
+<div class="grid" style="margin-top:8px"><div><label>Engine ID (chhota, bina space)</label><input id="aeId" type="text" placeholder="ogr417" autocapitalize="none"></div><div><label>Engine ka naam</label><input id="aeN" type="text" placeholder="OGR-417"></div></div><button class="secondary" style="width:100%;margin-top:10px" onclick="adAddEng()">+ Add Engine</button></div>
+<div class="section"><h2>Users</h2><div id="adUsers"></div></div>
+<div class="section"><h2>Naya User banao</h2><div class="grid"><div><label>Login ID</label><input id="auId" type="text" placeholder="700127" autocapitalize="none"></div><div><label>Naam</label><input id="auN" type="text"></div></div>
+<div class="grid" style="margin-top:8px"><div><label>Password (6+)</label><input id="auP" type="text"></div><div><label>Role</label><select id="auR"><option value="operator">Operator</option><option value="manager">Manager (sab dekhe)</option></select></div></div>
+<label style="margin-top:8px">Kaun se engines (operator ke liye)</label><div id="adNewEng"></div><button class="primary" style="width:100%;margin-top:10px" onclick="adCreate()">User banao</button><p class="note" id="auMsg"></p></div>
+</main>
+<script>
+const APP_VERSION='2026.11.09.2'; // Har update par ye badlo (jaise 2026.11.10.1) taake sab phones auto update ho jayen
+const FB_URL='https://dgm-fleet-default-rtdb.firebaseio.com',FB_KEY='AIzaSyDwuLu6B-eIFsusBZ-yWrJFCJUx58VkiLg';
+const NOLOGIN=false; // login/admin system ON hai. Band karne ke liye false ki jagah true likho
+let FA=NOLOGIN?null:(()=>{try{return JSON.parse(localStorage.getItem('fleetAuth'))}catch(e){return null}})();
+const EID=NOLOGIN?'':(localStorage.getItem('fleetEng')||'');
+const K=n=>n+(EID?'_'+EID:'');
+const CH=['Maks 2403','Corocon BL 1','Maks 2108','H2SO4','Maks 4080','Hypo'];
+try{const c=JSON.parse(localStorage.getItem(K('dprChem')));if(Array.isArray(c))c.forEach((n,i)=>{if(n&&i<CH.length)CH[i]=n});}catch(e){}
+const saveChem=()=>{try{localStorage.setItem(K('dprChem'),JSON.stringify(CH));localStorage.setItem(K('dprChemU'),Date.now())}catch(e){}};
+const showChem=()=>CH.forEach((n,i)=>{const e=$('chn'+i);if(e)e.value=n});
+const base=['date','maxLoad','genNow','genPrev','gasNow','gasPrev','runNow','runPrev','startNow','startPrev','oilNow','oilPrev','oilAdded','oilUsed','oilTopup','remarks','prepBy','supBy'];
+const ids=base.concat(CH.map((_,i)=>'cp'+i),CH.map((_,i)=>'cn'+i),CH.map((_,i)=>'cu'+i));
+const $=id=>document.getElementById(id);
+const num=id=>{let v=parseFloat($(id).value);return Number.isFinite(v)?v:0};
+const has=id=>$(id).value!=='';
+const today=()=>new Date().toISOString().slice(0,10);
+let reports=JSON.parse(localStorage.getItem(K('dprReports'))||'{}');
+function chemRender(){$('ch').innerHTML=CH.map((n,i)=>`<div class="chem"><input class="chn" id="chn${i}" type="text" placeholder="Chemical name"><div class="g3"><div><label>Previous</label><input id="cp${i}" type="number" step="any"></div><div><label>Present</label><input id="cn${i}" type="number" step="any"></div><div><label>Consumption</label><input id="cu${i}" type="number" step="any"></div></div></div>`).join('');showChem();CH.forEach((n,i)=>{$('chn'+i).oninput=()=>{CH[i]=$('chn'+i).value;saveChem();};});}
+function mins(s){let m=String(s||'').match(/^(\d{1,3}):?(\d{2})$/);return m?+m[1]*60+ +m[2]:0;}
+function hhmm(m){m=Math.max(0,Math.round(m));return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');}
+function fmt(n,d=2){return Number.isFinite(n)?n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}):'—';}
+function addStop(r='',d='',a='',b=''){let div=document.createElement('div');div.className='stop';
+div.innerHTML=`<div><label>Genset Stop</label><input class="sa" type="time"></div><div><label>Genset Start</label><input class="sb" type="time"></div><div><label>Duration (HH:MM)</label><input class="sd" type="text" readonly placeholder="Auto"></div><div style="display:flex;align-items:flex-end"><button style="width:100%" onclick="this.closest('.stop').remove();calc()">Remove</button></div><div class="full"><label>Reason</label><input class="sr" type="text" placeholder="Reason for stoppage"></div>`;
+div.querySelector('.sr').value=r;div.querySelector('.sa').value=a||'';div.querySelector('.sb').value=b||'';div.querySelector('.sd').value=d||'';
+const upd=()=>{let x=div.querySelector('.sa').value,y=div.querySelector('.sb').value,t=m=>+m.slice(0,2)*60+ +m.slice(3,5);div.querySelector('.sd').value=(x&&y)?hhmm((t(y)-t(x)+1440)%1440):'';calc();};
+div.querySelector('.sa').addEventListener('input',upd);div.querySelector('.sb').addEventListener('input',upd);
+$('stops').appendChild(div);}
+function stops(){return [...document.querySelectorAll('.stop')].map(s=>({r:s.querySelector('.sr').value,a:s.querySelector('.sa').value,b:s.querySelector('.sb').value,d:s.querySelector('.sd').value}));}
+function calc(){
+let gen=num('genNow')-num('genPrev'),run=num('runNow')-num('runPrev'),stop=stops().reduce((a,s)=>a+mins(s.d),0);
+let ok=has('genNow')&&has('genPrev');
+$('generation').textContent=ok?fmt(gen,0):'—';$('avgLoad').textContent=ok&&run>0?fmt(gen/run):'—';
+$('loadFactor').textContent=ok&&run>0&&num('maxLoad')>0?fmt(gen/run/num('maxLoad')*100)+'%':'—';
+$('totalStop').textContent=hhmm(stop);$('availability').textContent=hhmm(1440-stop);$('availabilityPct').textContent=fmt(Math.max(0,1440-stop)/1440*100)+'%';
+let gas=has('gasNow')&&has('gasPrev')?num('gasNow')-num('gasPrev'):null;
+$('gasUsed').textContent=gas===null?'—':fmt(gas,2);$('gasPerKwh').textContent=gas===null||!(gen>0)?'—':fmt(gas/gen,4);
+$('runDiff').textContent=has('runNow')&&has('runPrev')?fmt(run,2):'—';$('startDiff').textContent=has('startNow')&&has('startPrev')?fmt(num('startNow')-num('startPrev'),0):'—';
+let oil=has('oilUsed')?num('oilUsed'):null;
+$('oilPerKwh').textContent=oil===null||!(gen>0)?'—':fmt(oil*0.89*1000/gen,3);
+}
+function collect(){let d={};ids.forEach(id=>d[id]=$(id).value);d.stops=stops();return d;}
+const r2=n=>String(Math.round(n*100)/100);
+function fill(d){ids.forEach(id=>$(id).value=d[id]??'');$('stops').innerHTML='';(d.stops||[]).forEach(s=>addStop(s.r,s.d,s.a,s.b));if(!has('oilUsed')&&has('oilNow')&&has('oilPrev'))$('oilUsed').value=r2(num('oilPrev')+num('oilAdded')-num('oilNow'));CH.forEach((_,i)=>{if(!has('cu'+i)&&has('cn'+i)&&has('cp'+i))chFromNow(i);});calc();}
+function fresh(date){let ks=Object.keys(reports).filter(k=>k<date&&!reports[k]._del).sort(),p=ks.length?reports[ks[ks.length-1]]:null,d={date,maxLoad:'1400',oilAdded:'0'};
+if(p){d.prepBy=p.prepBy;d.supBy=p.supBy;d.maxLoad=p.maxLoad||'1400';d.genPrev=p.genNow||p.genPrev;d.runPrev=p.runNow||p.runPrev;d.startPrev=p.startNow||p.startPrev;d.gasPrev=p.gasNow||p.gasPrev;d.oilPrev=p.oilNow||p.oilPrev;
+CH.forEach((_,i)=>{d['cp'+i]=p['cn'+i]||p['cp'+i]||'';});}
+else{d.genPrev='33712900';d.runPrev='64642';d.startPrev='462';d.oilPrev='62';}
+fill(d);}
+function openDate(date){if(reports[date]&&!reports[date]._del)fill(reports[date]);else fresh(date);renderOld();if(typeof MT!=='undefined'&&MT&&MT.sync)MT.sync();}
+function saveReport(){let d=collect();if(!d.date){alert('Please select a date first.');return;}d._u=Date.now();reports[d.date]=d;localStorage.setItem(K('dprReports'),JSON.stringify(reports));renderOld();alert('Report saved for '+d.date+'.');if(typeof syncNow==='function')syncNow(true);}
+function renderOld(){let ks=Object.keys(reports).filter(k=>!reports[k]._del).sort().reverse();$('oldList').innerHTML=ks.length?ks.map(k=>{let r=reports[k],g=(parseFloat(r.genNow)||0)-(parseFloat(r.genPrev)||0);return `<div class="old"><span>${k} — ${fmt(g,0)} kWh</span><div><button class="secondary" onclick="pick('${k}')">Open / Edit</button><button class="secondary" onclick="del('${k}')">Delete</button></div></div>`}).join(''):'<p class="note">No reports saved yet.</p>';}
+function pick(k){$('date').value=k;openDate(k);window.scrollTo(0,0);}
+function del(k){if(!confirm('Delete the report for '+k+'?'))return;reports[k]={_del:1,_u:Date.now()};localStorage.setItem(K('dprReports'),JSON.stringify(reports));renderOld();}
+function resetReport(){if(!confirm('Clear the current report?'))return;let dt=$('date').value||today();fresh(dt);}
+// ---- File save / download (APK WebView me bhi chale) ----
+function dlUi(name,blob,dataUrl){
+ const old=document.getElementById('dlBar');if(old)old.remove();
+ const bar=document.createElement('div');bar.id='dlBar';
+ bar.style.cssText='position:fixed;left:10px;right:10px;bottom:12px;z-index:300;background:#17343a;color:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:center;font-size:14px;box-shadow:0 4px 16px rgba(0,0,0,.35)';
+ bar.innerHTML='<span style="flex:1">'+name+' is ready. Tap Help if the download did not start.</span><button style="width:auto;margin:0;padding:8px 14px;background:#ffd166;color:#17343a;font-weight:700;border:0;border-radius:8px">Help</button>';
+ bar.querySelector('button').onclick=()=>{bar.remove();dlHelp(name,blob,dataUrl)};
+ document.body.appendChild(bar);setTimeout(()=>{if(bar.parentNode)bar.remove()},12000);
+}
+function dlHelp(name,blob,dataUrl){
+ const ov=document.createElement('div');
+ ov.style.cssText='position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.55);z-index:310;display:flex;align-items:flex-end;justify-content:center';
+ const isTxt=/^text\/|json|csv/.test(blob.type||'')||/\.(csv|json|txt)$/i.test(name),isImg=/^image\//.test(blob.type||'');
+ const bx=document.createElement('div');
+ bx.style.cssText='background:#fff;width:100%;max-width:480px;border-radius:16px 16px 0 0;padding:16px;max-height:85vh;overflow:auto';
+ bx.innerHTML='<div style="font-weight:700;font-size:17px;margin-bottom:6px">'+name+'</div><div style="color:#555;font-size:14px;margin-bottom:12px">If the download did not start, try one of these:</div><div id="dlOpts" style="display:grid;gap:8px"></div><div id="dlMsg" style="margin-top:10px;color:#1b7a4a;font-size:14px"></div>';
+ ov.appendChild(bx);ov.onclick=e=>{if(e.target===ov)ov.remove()};
+ const opts=bx.querySelector('#dlOpts'),msg=bx.querySelector('#dlMsg');
+ const add=(t,fn,bg)=>{const b=document.createElement('button');b.textContent=t;b.style.cssText='width:100%;margin:0;padding:13px;border:0;border-radius:10px;font-size:15px;font-weight:700;color:#fff;background:'+(bg||'#1f6f6b');b.onclick=fn;opts.appendChild(b)};
+ if(navigator.share)add('Share (WhatsApp / Drive / Files)',()=>{const f=new File([blob],name,{type:blob.type||'application/octet-stream'});navigator.share(navigator.canShare&&navigator.canShare({files:[f]})?{files:[f],title:name}:{title:name,text:name}).catch(()=>{})});
+ if(isTxt)add('Copy as text (paste into Sheets / Notes)',()=>{const r=new FileReader();r.onload=()=>{const t=String(r.result).replace(/^\ufeff/,'');
+  const done=()=>{msg.textContent='Copied. Paste it into any app.'};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,()=>fb(t))}else fb(t);
+  function fb(t){const ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:-999px';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){msg.textContent='Copy failed.'}ta.remove()}};r.readAsText(blob)},'#2b6cb0');
+ add('Open another way',()=>{try{const w=window.open(dataUrl,'_blank');if(!w)location.href=dataUrl}catch(e){location.href=dataUrl}},'#6b46c1');
+ if(isImg){const im=document.createElement('img');im.src=dataUrl;im.style.cssText='width:100%;margin-top:10px;border-radius:8px';bx.appendChild(im);msg.textContent='Press and hold the image to save it.'}
+ add('Close',()=>ov.remove(),'#888');
+ document.body.appendChild(ov);
+}
+function dl(name,blob){
+ if(window.Android&&Android.saveFile){let r=new FileReader();r.onload=()=>{try{Android.saveFile(name,blob.type||'application/octet-stream',String(r.result).split(',')[1]);}catch(e){alert('Save error: '+e);}};r.readAsDataURL(blob);return;}
+ const type=blob.type||'application/octet-stream',wv=/; wv\)|Version\/\d+\.\d+ Chrome/.test(navigator.userAgent);
+ const viaData=()=>{const r=new FileReader();r.onload=()=>{const a=document.createElement('a');a.href=r.result;a.download=name;a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>a.remove(),800);dlUi(name,blob,r.result)};r.readAsDataURL(blob)};
+ if(!wv){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);return}
+ // APK WebView: pehle Share sheet (Save to Files / Drive / WhatsApp), na ho to data-URL download
+ try{const f=new File([blob],name,{type});
+  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:name}).catch(e=>{if(e&&e.name==='AbortError')return;viaData()});return}}catch(e){}
+ viaData();
+}
+function backup(){dl('Plant_Report_Backup_'+today()+'.json',new Blob([JSON.stringify(Object.assign({},reports,{_mon:MON.get(),_rl:RL.get(),_maint:MT.get(),_chem:CH,_chemU:+localStorage.getItem(K('dprChemU'))||0}))],{type:'application/json'}));}
+function restore(inp){let f=inp.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let o=JSON.parse(r.result);if(typeof o!=='object'||Array.isArray(o))throw 0;let mn=o._mon;delete o._mon;let rlg=o._rl;delete o._rl;let mm=o._maint,cc=o._chem,cu=o._chemU;delete o._maint;delete o._chem;delete o._chemU;if(!confirm(Object.keys(o).length+' reports will be restored. Reports with the same date will be replaced. Continue?'))return;if(mn&&typeof mn==='object')MON.set(mn);if(rlg&&typeof rlg==='object')RL.set(rlg);Object.assign(reports,o);if(mm&&(mm.sp||mm.groups))MT.set(mm);if(Array.isArray(cc)){cc.forEach((n,i)=>{if(n&&i<CH.length)CH[i]=n});saveChem();if(cu)localStorage.setItem(K('dprChemU'),cu);showChem();}localStorage.setItem(K('dprReports'),JSON.stringify(reports));renderOld();openDate($('date').value||today());alert('Restore complete.');}catch(e){alert('Invalid backup file.');}inp.value='';};r.readAsText(f);}
+function exportCsv(){
+let gen=num('genNow')-num('genPrev'),run=num('runNow')-num('runPrev');
+let rows=[['All Operational Reports'],...hdrInfo(),['Date',$('date').value],[],['Parameter','Value','Unit'],
+['Present Generation Reading',num('genNow'),'kWh'],['Previous Generation Reading',num('genPrev'),'kWh'],['Unit Generated',gen,'kWh'],['Max Load',num('maxLoad'),'kW'],['Average Load',run>0?gen/run:0,'kW'],['Plant Loading',$('loadFactor').textContent,'%'],
+['Gas Used',$('gasUsed').textContent,'m3'],['Gas per kWh',$('gasPerKwh').textContent,'m3/kWh'],['Running Hours Difference',$('runDiff').textContent,'Hrs'],['Starts Difference',$('startDiff').textContent,'Starts'],
+['Oil Consumption',$('oilUsed').value,'L'],['Oil Consumption g/kWh',$('oilPerKwh').textContent,'g/kWh'],['Remarks',$('remarks').value,''],[],
+['Stoppage Report'],['Reason','Genset Stop','Genset Start','Duration (HH:MM)'],...stops().map(s=>[s.r,s.a,s.b,s.d]),['Total Stoppage',$('totalStop').textContent,'HH:MM'],
+['Plant Availability',$('availability').textContent,'HH:MM'],['Availability %',$('availabilityPct').textContent,'%'],[],
+['Chemical Consumption'],['Chemical','Previous','Present','Consumption (Previous - Present)'],...CH.map((n,i)=>[n,$('cp'+i).value,$('cn'+i).value,$('cu'+i).value]),[],
+['Report Prepared By',$('prepBy').value,'Supervisor Signature',$('supBy').value]];
+let csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');
+dl('Daily_Plant_Report_'+($('date').value||'report')+'.csv',new Blob([csv],{type:'text/csv;charset=utf-8'}));}
+
+function csvDl(name,rows){const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"').join(',')).join('\r\n');dl(name,new Blob([csv],{type:'text/csv;charset=utf-8'}));}
+function repRow(d,r,engName){const n=k=>{const v=parseFloat(r[k]);return Number.isFinite(v)?v:''};const gen=(n('genNow')!==''&&n('genPrev')!=='')?n('genNow')-n('genPrev'):'',run=(n('runNow')!==''&&n('runPrev')!=='')?Math.round((n('runNow')-n('runPrev'))*100)/100:'';
+ const st=(r.stops||[]),sm=st.reduce((a,x)=>a+mins(x.d),0),mx=parseFloat(r.maxLoad)||0;
+ const gas=(n('gasNow')!==''&&n('gasPrev')!=='')?n('gasNow')-n('gasPrev'):'';
+ const names=(typeof CH!=='undefined')?CH:[];
+ const row=[d,r.maxLoad||'',r.genPrev||'',r.genNow||'',gen,r.runPrev||'',r.runNow||'',run,gen!==''&&run>0?Math.round(gen/run*100)/100:'',gen!==''&&run>0&&mx>0?Math.round(gen/run/mx*10000)/100:'',r.startPrev||'',r.startNow||'',(n('startNow')!==''&&n('startPrev')!=='')?n('startNow')-n('startPrev'):'',gas,gas!==''&&gen>0?Math.round(gas/gen*10000)/10000:'',r.oilUsed||'',r.oilUsed&&gen>0?Math.round(parseFloat(r.oilUsed)*0.89*1000/gen*1000)/1000:'',hhmm(sm),Math.round(Math.max(0,1440-sm)/14.4*100)/100,st.map(x=>(x.r||'-')+' ('+(x.a||'')+'-'+(x.b||'')+', '+(x.d||'')+')').join(' | ')];
+ names.forEach((c,i)=>row.push(r['cu'+i]||''));row.push(r.remarks||'',r.prepBy||'',r.supBy||'');if(engName!==undefined)row.unshift(engName);return row;}
+function repHead(withEng){const h=['Date','Max Load (kW)','Prev Meter (kWh)','Present Meter (kWh)','Generation (kWh)','Prev Run Hrs','Present Run Hrs','Run Hrs Diff','Avg Load (kW)','Plant Loading %','Prev Starts','Present Starts','Starts Diff','Gas Used (m3)','Gas per kWh','Oil Used (L)','Oil g/kWh','Total Stoppage (HH:MM)','Availability %','Stoppage Details'];
+ CH.forEach(c=>h.push(c));h.push('Remarks','Prepared By','Supervisor');if(withEng)h.unshift('Engine');return h;}
+function exportAll(){const ks=Object.keys(reports).filter(k=>!reports[k]._del).sort();if(!ks.length){alert('Abhi koi report save nahi hai.');return;}
+ csvDl('All_Daily_Reports_'+today()+'.csv',[...hdrInfo(),[],repHead(false)].concat(ks.map(k=>repRow(k,reports[k]))));}
+async function mgExcel(){const st=$('mgStat');st.textContent='Excel ban rahi hai...';
+ try{const meta=(await fb('GET','meta/engines'))||{},ids=Object.keys(meta).sort(),rows=[repHead(true)];
+  for(const id of ids){const D=await mgGet(id),nm=(meta[id]&&meta[id].name)||id;Object.keys(D.r).sort().forEach(d=>rows.push(repRow(d,D.r[d],nm)))}
+  if(rows.length<2){st.textContent='Abhi koi report nahi.';return}
+  csvDl('Fleet_Reports_'+today()+'.csv',rows);st.textContent='Excel tayyar: '+(rows.length-1)+' reports.'}
+ catch(e){st.textContent='Excel nahi bani: '+e.message}}
+function exportPdf(){
+const P=[[]];let y=800;
+const put=(it,g)=>{if(y<60){P.push([]);y=800;}it.forEach(i=>P[P.length-1].push({x:i[0],y:y,t:String(i[1]),b:i[2],s:i[3]||10}));y-=g||15;};
+const H=t=>{y-=8;put([[40,t,1,12]],20);};
+const R=(a,b,c)=>put([[40,a],[300,b],[460,c||'']]);
+const T=(a,b,c,d,bold)=>put([[40,a,bold],[200,b,bold],[330,c,bold],[450,d,bold]]);
+put([[40,'All Operational Reports',1,16]],22);put([[40,'Genset: '+$('hOgr').value+'     Location: '+$('hLoc').value]],15);put([[40,'Report Date: '+$('date').value]],10);
+H('Daily Plant Report - 24 Hours');
+R('Present Generation Reading',$('genNow').value,'kWh');R('Previous Generation Reading',$('genPrev').value,'kWh');R('Unit Generated',$('generation').textContent,'kWh');
+R('Max Load',$('maxLoad').value,'kW');R('Average Load',$('avgLoad').textContent,'kW');R('Plant Loading',$('loadFactor').textContent);
+R('Gas Used',$('gasUsed').textContent,'m3');R('Gas per kWh',$('gasPerKwh').textContent,'m3/kWh');
+R('Running Hours (Present / Previous)',$('runNow').value+' / '+$('runPrev').value,'Hrs');R('Running Hours Difference',$('runDiff').textContent,'Hrs');
+R('Starts (Present / Previous)',$('startNow').value+' / '+$('startPrev').value);R('Starts Difference',$('startDiff').textContent);
+R('Oil Consumption',$('oilUsed').value,'L');R('Oil Consumption',$('oilPerKwh').textContent,'g/kWh');
+put([[40,'Remarks:',1]]);($('remarks').value.match(/.{1,85}/g)||['-']).forEach(l=>put([[50,l]]));
+H('Stoppage Report');T('Reason','Genset Stop','Genset Start','Duration',1);
+const st=stops();(st.length?st:[{r:'None',a:'',b:'',d:''}]).forEach(s=>T(s.r.slice(0,30),s.a||'-',s.b||'-',s.d||'-'));
+R('Total Stoppage',$('totalStop').textContent,'HH:MM');R('Plant Availability',$('availability').textContent,'HH:MM');R('Availability',$('availabilityPct').textContent);
+H('Chemical Consumption');T('Chemical','Previous','Present','Consumption',1);
+CH.forEach((n,i)=>T(n,$('cp'+i).value||'-',$('cn'+i).value||'-',$('cu'+i).value||'-'));
+if(y<120){P.push([]);y=800;}
+y-=30;put([[40,'Report Prepared By: '+($('prepBy').value||'______________________')],[300,'Supervisor Signature: '+($('supBy').value||'______________________')]],15);
+const esc=t=>t.replace(/[^\x20-\x7E]/g,'').replace(/([()\\])/g,'\\$1');
+const o=[];o[1]='<</Type/Catalog/Pages 2 0 R>>';
+o[2]='<</Type/Pages/Kids['+P.map((_,k)=>(5+2*k)+' 0 R').join(' ')+']/Count '+P.length+'>>';
+o[3]='<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>';o[4]='<</Type/Font/Subtype/Type1/BaseFont/Helvetica-Bold>>';
+P.forEach((pg,k)=>{let s=pg.map(i=>'BT /F'+(i.b?2:1)+' '+i.s+' Tf '+i.x+' '+i.y+' Td ('+esc(i.t)+') Tj ET').join('\n')+'\nBT /F1 8 Tf 40 25 Td (Page '+(k+1)+' of '+P.length+') Tj ET';
+o[5+2*k]='<</Type/Page/Parent 2 0 R/MediaBox[0 0 595 842]/Resources<</Font<</F1 3 0 R/F2 4 0 R>>>>/Contents '+(6+2*k)+' 0 R>>';
+o[6+2*k]='<</Length '+s.length+'>>\nstream\n'+s+'\nendstream';});
+let out='%PDF-1.4\n',off=[];for(let i=1;i<o.length;i++){off[i]=out.length;out+=i+' 0 obj\n'+o[i]+'\nendobj\n';}
+let xr=out.length;out+='xref\n0 '+o.length+'\n0000000000 65535 f \n'+off.slice(1).map(n=>String(n).padStart(10,'0')+' 00000 n \n').join('')+'trailer\n<</Size '+o.length+'/Root 1 0 R>>\nstartxref\n'+xr+'\n%%EOF';
+dl('Daily_Plant_Report_'+($('date').value||'report')+'.pdf',new Blob([out],{type:'application/pdf'}));}
+
+if(window.Android&&Android.printPage){window.print=function(){Android.printPage();};}
+chemRender();
+// Oil sync: Consumed likhne par Current Tank Reading khud badle, aur Current likhne par Consumed khud badle
+function oilFromUsed(){if(has('oilUsed')&&has('oilPrev'))$('oilNow').value=r2(num('oilPrev')+num('oilAdded')-num('oilUsed'));}
+function oilFromNow(){if(has('oilNow')&&has('oilPrev'))$('oilUsed').value=r2(num('oilPrev')+num('oilAdded')-num('oilNow'));else if(!has('oilNow'))$('oilUsed').value='';}
+$('oilUsed').addEventListener('input',()=>{if(!has('oilUsed'))$('oilNow').value='';else oilFromUsed();});
+$('oilNow').addEventListener('input',oilFromNow);
+['oilPrev','oilAdded'].forEach(id=>$(id).addEventListener('input',()=>{if(has('oilUsed'))oilFromUsed();else oilFromNow();}));
+function chFromUsed(i){if(has('cu'+i)&&has('cp'+i))$('cn'+i).value=r2(num('cp'+i)-num('cu'+i));}
+function chFromNow(i){if(has('cn'+i)&&has('cp'+i))$('cu'+i).value=r2(num('cp'+i)-num('cn'+i));else if(!has('cn'+i))$('cu'+i).value='';}
+CH.forEach((_,i)=>{$('cu'+i).addEventListener('input',()=>{if(!has('cu'+i))$('cn'+i).value='';else chFromUsed(i);});
+$('cn'+i).addEventListener('input',()=>chFromNow(i));
+$('cp'+i).addEventListener('input',()=>{if(has('cu'+i))chFromUsed(i);else chFromNow(i);});});
+ids.forEach(id=>$(id).addEventListener('input',calc));
+$('date').addEventListener('change',()=>openDate($('date').value||today()));
+$('date').value=today();openDate($('date').value);
+
+function showTab(t){$('repMain').hidden=t!=='R';$('rlMain').hidden=t!=='L';document.body.classList.toggle('rlTab',t==='L');$('mtMain').hidden=t!=='M';$('syncMain').hidden=t!=='S';$('mgMain').hidden=t!=='G';$('adMain').hidden=t!=='A';$('scMain').hidden=t!=='T';$('moMain').hidden=t!=='N';if(t==='N'){MON.syncNames();MON.refresh()}['R','L','M','S','G','A','T','N'].forEach(x=>$('tb'+x).classList.toggle('on',x===t));window.scrollTo(0,0);if(t==='G')mgRefresh();if(t==='L')RL.sync();if(t==='T')SC.refresh();if(t==='A')adLoad();}
+var MT=(()=>{
+const KEY=K('dprMaint');
+const mk=()=>({name:'OGR-417',rh:'',recs:[],groups:[{name:'Oil Sample',pts:[1,2,3].map(i=>({n:'Point '+i,prev:'',add:''}))},{name:'Greasing',pts:[1,2,3].map(i=>({n:'Point '+i,prev:'',add:''}))}]});
+function norm(j){if(!j||typeof j!=='object')return null;if(!j.groups&&j.sp){j.groups=[];[['o','Oil Sample'],['g','Greasing']].forEach(([c,n])=>{if(Array.isArray(j.sp[c]))j.groups.push({name:n,pts:j.sp[c]})})}
+ if(!Array.isArray(j.groups))return null;if(!Array.isArray(j.recs))j.recs=[];return j}
+let S=null,edit=null;try{S=norm(JSON.parse(localStorage.getItem(KEY)));}catch(e){}if(!S)S=mk();
+const save=k=>{if(!k)S._u=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const rh=()=>$('runNow').value;
+const esc=v=>String(v==null?'':v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nv=v=>(v===''||v==null||isNaN(+v))?null:+v,f1=n=>Math.round(n*10)/10;
+function st(p){const a=nv(p.prev),b=nv(p.add),h=nv(rh());if(a==null||b==null)return{due:null,t:'—',c:''};const due=f1(a+b);if(h==null)return{due,t:'Due at '+due+' h',c:''};const r=f1(due-h);
+ if(r<0)return{due,t:'Overdue by '+(-r)+' h',c:'bad'};if(r<=50)return{due,t:'Due in '+r+' h',c:'warn'};return{due,t:r+' h left',c:'ok'}}
+const row=(l,v,c)=>`<div class="mr"><span>${esc(l)}</span><b class="${c||''}">${esc(v)}</b></div>`;
+function items(){const o=[];S.groups.forEach(g=>g.pts.forEach(p=>o.push({cat:g.name,n:p.n,s:st(p)})));return o}
+const sec=(t,b)=>`<div class="section"><h2>${esc(t)}</h2>${b}</div>`;
+function renderOv(){let h=sec('Overview',row('Genset',S.name||'-')+row('Running Hours',rh()===''?'-':rh()+' h'));
+ h+=sec('Maintenance Records',S.recs.length?S.recs.map(r=>row(r.t+(r.d?' ('+r.d+')':''),(r.prev||'-')+' → '+(r.pres||'-')+' h')).join(''):row('No records','-'));
+ S.groups.forEach(g=>{h+=sec('Set Points: '+g.name,g.pts.length?g.pts.map(p=>{const s=st(p);return row(p.n,s.due==null?'—':'Due '+s.due+' h | '+s.t,s.c)}).join(''):row('No points','-'))});
+ const al=items().filter(i=>i.s.c==='bad'||i.s.c==='warn');
+ h+=sec('Due Alerts',al.length?al.map(i=>`<div class="mal ${i.s.c==='warn'?'w':''}"><b>${esc(i.cat)}: ${esc(i.n)}</b><br>${esc(i.s.t)}</div>`).join(''):row('No alerts','OK','ok'));
+ h+='<button class="primary" style="width:100%;margin-bottom:8px" onclick="MT.xls()">Download Maintenance Excel</button><button class="secondary" style="width:100%" onclick="MT.pdf()">Download Maintenance PDF</button>';
+ $('mOv').innerHTML=h}
+function renderMt(){$('mList').innerHTML=S.recs.length?S.recs.map(r=>{const d=nv(r.pres)!=null&&nv(r.prev)!=null?' ('+f1(r.pres-r.prev)+' h run)':'';return`<div class="mc mrec" onclick="MT.openM(${r.id})"><div><b>${esc(r.t)}</b><br><small>${esc(r.d)} | ${esc(r.prev||'-')} → ${esc(r.pres||'-')} h${d}</small>${r.n?'<br><small>'+esc(r.n)+'</small>':''}</div><span>›</span></div>`}).join(''):'<p class="note">Abhi koi record nahi. “+ Add” dabao.</p>'}
+function renderSp(){$('mSp').innerHTML=S.groups.map((g,gi)=>`<div class="section"><div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><input id="mG${gi}" type="text" value="${esc(g.name)}" placeholder="Activity name" style="font-weight:700;color:#15515a;background:#f3f9f7" oninput="MT.gName(${gi},this.value)"><button class="primary sm" style="white-space:nowrap" onclick="MT.newGroup(${gi})">+ New Activity</button></div>`+g.pts.map((p,i)=>{const s=st(p);return`<div class="mc"><label>Name</label><input id="mN${gi}_${i}" type="text" value="${esc(p.n)}" oninput="MT.spIn(${gi},${i},'n',this.value)">
+<div class="grid" style="margin-top:8px"><div><label>Previous hours</label><input type="number" step="any" inputmode="decimal" value="${esc(p.prev)}" oninput="MT.spIn(${gi},${i},'prev',this.value)"></div><div><label>Added hours</label><input type="number" step="any" inputmode="decimal" value="${esc(p.add)}" oninput="MT.spIn(${gi},${i},'add',this.value)"></div></div>
+<div class="mr" style="margin:10px 0 8px"><span>Due</span><b id="mD${gi}_${i}" class="${s.c}">${s.due==null?'—':s.due+' h | '+s.t}</b></div><div style="display:flex;gap:8px"><button class="mx sm" onclick="MT.delSp(${gi},${i},this)">Remove</button><button class="primary sm" onclick="MT.addSp(${gi},${i})">+ Add</button></div></div>`}).join('')+`<div style="display:flex;gap:8px"><button class="secondary sm" onclick="MT.addSp(${gi})">+ Add Point</button><button class="mx sm" onclick="MT.delGroup(${gi},this)">Remove this activity</button></div></div>`).join('')}
+function spIn(gi,i,k,v){S.groups[gi].pts[i][k]=v;save();if(k!=='n'){const s=st(S.groups[gi].pts[i]),e=$('mD'+gi+'_'+i);e.className=s.c;e.textContent=s.due==null?'—':s.due+' h | '+s.t}renderOv()}
+function gName(gi,v){S.groups[gi].name=v;save();renderOv()}
+function focusEl(id){const el=$(id);if(el){try{el.scrollIntoView({block:'center'})}catch(e){}el.focus();if(el.select)el.select()}}
+function newGroup(gi){const idx=gi+1;S.groups.splice(idx,0,{name:'New Activity',pts:[{n:'Point 1',prev:'',add:''}]});save();renderSp();renderOv();focusEl('mG'+idx)}
+function addSp(gi,i){const arr=S.groups[gi].pts,idx=i==null?arr.length:i+1;arr.splice(idx,0,{n:'Point '+(arr.length+1),prev:'',add:''});save();renderSp();renderOv();focusEl('mN'+gi+'_'+idx)}
+function sure(b){if(b&&!b.dataset.sure){b.dataset.sure='1';b.dataset.t=b.textContent;b.textContent='Tap again to confirm';setTimeout(()=>{if(b.isConnected){b.dataset.sure='';b.textContent=b.dataset.t}},3000);return false}return true}
+function delSp(gi,i,b){if(!sure(b))return;S.groups[gi].pts.splice(i,1);save();renderSp();renderOv()}
+function delGroup(gi,b){if(!sure(b))return;S.groups.splice(gi,1);save();renderSp();renderOv()}
+function openM(id){edit=id==null?null:id;const r=S.recs.find(x=>x.id===id)||{t:'',d:today(),prev:'',pres:rh(),n:''};
+ $('mf_t').value=r.t;$('mf_d').value=r.d;$('mf_p').value=r.prev;$('mf_r').value=r.pres;$('mf_n').value=r.n;$('mf_x').hidden=edit==null;$('mMd').hidden=false}
+function closeM(){$('mMd').hidden=true}
+function saveM(){const t=$('mf_t').value.trim();if(!t){alert('Title likho');return}const r={id:edit==null?Date.now():edit,t,d:$('mf_d').value,prev:$('mf_p').value,pres:$('mf_r').value,n:$('mf_n').value};
+ const i=S.recs.findIndex(x=>x.id===r.id);if(i>=0)S.recs[i]=r;else S.recs.unshift(r);save();closeM();renderMt();renderOv()}
+function delRec(b){if(!sure(b))return;S.recs=S.recs.filter(x=>x.id!==edit);save();closeM();renderMt();renderOv()}
+function xls(){const rows=[['Genset Maintenance Record'],['Genset',$('hOgr').value.trim()],['Location',$('hLoc').value.trim()],['Genset Name (Maintenance tab)',S.name||''],['Date',today()],['Running Hours',rh()||''],[],
+ ['Maintenance Records'],['Date','Work Done','Previous Hours','Present Hours','Hours Run','Note']];
+ if(S.recs.length)S.recs.forEach(r=>rows.push([r.d||'',r.t||'',r.prev||'',r.pres||'',(nv(r.pres)!=null&&nv(r.prev)!=null)?f1(r.pres-r.prev):'',r.n||'']));else rows.push(['No records']);
+ rows.push([],['Set Points'],['Activity','Point','Last Done At (h)','Interval (h)','Due At (h)','Status']);
+ S.groups.forEach(g=>{if(g.pts.length)g.pts.forEach(p=>{const s=st(p);rows.push([g.name,p.n,p.prev||'',p.add||'',s.due==null?'':s.due,s.t])});else rows.push([g.name,'No points'])});
+ rows.push([],['Due Alerts'],['Activity','Point','Status']);
+ const al=items().filter(i=>i.s.c==='bad'||i.s.c==='warn');if(al.length)al.forEach(i=>rows.push([i.cat,i.n,i.s.t]));else rows.push(['No alerts','','OK']);
+ csvDl('Genset_Maintenance_'+today()+'.csv',rows)}
+function pdf(){const L=['Genset Maintenance Record - '+S.name,'Date: '+today(),'Running Hours: '+(rh()||'-'),'','MAINTENANCE RECORDS'];
+ S.recs.forEach(r=>{L.push('- '+r.t+' ('+(r.d||'')+'): '+(r.prev||'-')+' -> '+(r.pres||'-')+' h');if(r.n)L.push('    '+r.n)});if(!S.recs.length)L.push('- none');
+ S.groups.forEach(g=>{L.push('','SET POINTS: '+String(g.name).toUpperCase());g.pts.forEach(p=>{const s=st(p);L.push('- '+p.n+': '+(s.due==null?'-':'Due '+s.due+' h | '+s.t))})});
+ const al=items().filter(i=>i.s.c==='bad'||i.s.c==='warn');L.push('','DUE ALERTS');al.forEach(i=>L.push('- '+i.cat+' / '+i.n+': '+i.s.t));if(!al.length)L.push('- none');
+ const W=[];L.forEach(l=>{l=String(l).replace(/[\r\n]+/g,' ');do{W.push(l.slice(0,88));l=l.slice(88)}while(l.length)});
+ const pg=[];for(let i=0;i<W.length;i+=48)pg.push(W.slice(i,i+48));const cl=x=>x.replace(/[^\x20-\x7e]/g,'?').replace(/([\\()])/g,'\\$1');
+ let p='%PDF-1.4\n',off=[];const ob=(n,b)=>{off[n]=p.length;p+=n+' 0 obj\n'+b+'\nendobj\n'};
+ ob(1,'<< /Type /Catalog /Pages 2 0 R >>');ob(2,'<< /Type /Pages /Kids ['+pg.map((_,k)=>(4+2*k)+' 0 R').join(' ')+'] /Count '+pg.length+' >>');ob(3,'<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>');
+ pg.forEach((ls,k)=>{const c='BT /F1 11 Tf 40 800 Td 15 TL '+ls.map(l=>'('+cl(l)+') Tj T*').join(' ')+' ET';ob(4+2*k,'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents '+(5+2*k)+' 0 R >>');ob(5+2*k,'<< /Length '+c.length+' >>\nstream\n'+c+'\nendstream')});
+ const T=4+2*pg.length,x=p.length;p+='xref\n0 '+T+'\n0000000000 65535 f \n';for(let i=1;i<T;i++)p+=String(off[i]).padStart(10,'0')+' 00000 n \n';p+='trailer\n<< /Size '+T+' /Root 1 0 R >>\nstartxref\n'+x+'\n%%EOF';
+ dl('Genset_Maintenance_'+today()+'.pdf',new Blob([p],{type:'application/pdf'}))}
+function init(){$('mGn').value=S.name||'';$('mRh').value=rh();renderOv();renderMt();renderSp()}
+$('mGn').oninput=()=>{S.name=$('mGn').value;save();renderOv()};
+function sync(){$('mRh').value=rh();renderOv();renderSp()}
+$('runNow').addEventListener('input',sync);
+document.querySelectorAll('.subs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.subs button').forEach(x=>x.classList.toggle('on',x===b));['mOv','mRec','mSp'].forEach(t=>$(t).hidden=t!==b.dataset.m)});
+init();
+return{sync,openM,closeM,saveM,delRec,addSp,delSp,spIn,gName,newGroup,delGroup,pdf,xls,get:()=>S,set:j=>{const n=norm(j);if(!n)return;S=n;save(true);init()}};
+})();
+
+
+const DOM='@dgmfleet.app';
+const chemU=()=>+localStorage.getItem(K('dprChemU'))||0;
+function sStat(m){const e=$('sStat');if(e)e.textContent=m}
+const lgMsg=m=>{$('lgMsg').textContent=m};
+const saveFA=()=>{try{localStorage.setItem('fleetAuth',JSON.stringify(FA))}catch(e){}};
+const errTxt=m=>({INVALID_LOGIN_CREDENTIALS:'ID ya password galat hai',EMAIL_NOT_FOUND:'Ye ID maujood nahi',INVALID_PASSWORD:'Password galat hai',EMAIL_EXISTS:'Ye ID pehle se bani hui hai',WEAK_PASSWORD:'Password kam az kam 6 akshar ka rakho',OPERATION_NOT_ALLOWED:'Firebase me Email/Password sign-in on nahi hai',TOO_MANY_ATTEMPTS_TRY_LATER:'Bahut koshish ho gayi, thodi der baad try karo'}[String(m||'').split(' ')[0]]||m);
+function lgCfg(){const u=($('lgUrl').value||FB_URL||localStorage.getItem('fleetUrl')||'').trim().replace(/\/+$/,''),k=($('lgKey').value||FB_KEY||localStorage.getItem('fleetKey')||'').trim();return{u,k}}
+async function authReq(ep,body,k){const r=await fetch('https://identitytoolkit.googleapis.com/v1/accounts:'+ep+'?key='+encodeURIComponent(k),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const j=await r.json();if(!r.ok)throw new Error((j.error&&j.error.message)||('HTTP '+r.status));return j}
+async function fbTok(){if(!FA)throw new Error('Login nahi hai');if(Date.now()>FA.exp-60000){const r=await fetch('https://securetoken.googleapis.com/v1/token?key='+encodeURIComponent(FA.key),{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'grant_type=refresh_token&refresh_token='+encodeURIComponent(FA.ref)});const j=await r.json();if(!r.ok)throw new Error('Session khatam, dobara login karo');FA.tok=j.id_token;FA.ref=j.refresh_token;FA.exp=Date.now()+(+j.expires_in)*1000;saveFA()}return FA.tok}
+async function fb(method,path,body,tok){const t=tok||await fbTok(),u=FA?FA.url:lgCfg().u;const r=await fetch(u+'/'+path+'.json?auth='+encodeURIComponent(t),{method,headers:{'Content-Type':'application/json'},body:body===undefined?undefined:JSON.stringify(body)});if(!r.ok)throw new Error((r.status===401||r.status===403)?'Permission nahi (HTTP '+r.status+')':'HTTP '+r.status);return r.json()}
+function setEngine(e){if(!localStorage.getItem('dprMigrated')){['dprReports','dprMaint','dprChem','dprChemU'].forEach(n=>{const v=localStorage.getItem(n);if(v!==null&&localStorage.getItem(n+'_'+e)===null)localStorage.setItem(n+'_'+e,v)});localStorage.setItem('dprMigrated','1')}
+ if(!localStorage.getItem('dprMigrated2')){['stoppage_entries_v2','stoppage_u_v2','rlLogs','monReports','hdr_hOgr','hdr_hLoc','hdr_hModel','hdr_hRating','hdr_hRent'].forEach(n=>{const v=localStorage.getItem(n);if(v!==null&&localStorage.getItem(n+'_'+e)===null)localStorage.setItem(n+'_'+e,v)});localStorage.setItem('dprMigrated2','1')}
+ localStorage.setItem('fleetEng',e)}
+async function finishLogin(u,k,id,a,prof){localStorage.setItem('fleetUrl',u);localStorage.setItem('fleetKey',k);
+ FA={url:u,key:k,uid:a.localId,id,name:prof.name||id,role:prof.role||'operator',engines:Object.keys(prof.engines||{}),tok:a.idToken,ref:a.refreshToken,exp:Date.now()+(+a.expiresIn)*1000};
+ let meta={};try{meta=await fb('GET','meta/engines')||{}}catch(e){}localStorage.setItem('fleetMeta',JSON.stringify(meta));
+ FA.engs=FA.role==='admin'?Object.keys(meta):FA.engines;saveFA();
+ if(FA.role!=='manager'&&FA.engs.length)setEngine(FA.engs[0]);else localStorage.removeItem('fleetEng');
+ location.reload()}
+async function doLogin(){const {u,k}=lgCfg(),id=$('lgId').value.trim().toLowerCase(),pw=$('lgPw').value;
+ if(!u||!k){lgMsg('Server setup me Database URL aur API Key likho');return}if(!/^[a-z0-9._-]+$/.test(id)||!pw){lgMsg('ID aur password likho');return}
+ lgMsg('Login ho raha hai...');
+ try{const a=await authReq('signInWithPassword',{email:id+DOM,password:pw,returnSecureToken:true},k);
+  let prof;try{prof=await fb('GET','users/'+a.localId,undefined,a.idToken)}catch(e){prof=null}
+  if(!prof||prof.active===false)throw new Error('Aapka account admin ne abhi activate nahi kiya');await finishLogin(u,k,id,a,prof)}catch(e){lgMsg(errTxt(e.message))}}
+async function doBootstrap(){const {u,k}=lgCfg(),id=$('lgId').value.trim().toLowerCase(),pw=$('lgPw').value;
+ if(!u||!k){lgMsg('Server setup me Database URL aur API Key likho');return}if(!/^[a-z0-9._-]+$/.test(id)||pw.length<6){lgMsg('ID likho aur password kam az kam 6 akshar ka');return}
+ lgMsg('Admin account ban raha hai...');
+ try{const a=await authReq('signUp',{email:id+DOM,password:pw,returnSecureToken:true},k);
+  try{await fb('PUT','users/'+a.localId,{id,name:id,role:'admin'},a.idToken)}catch(e){throw new Error('Admin pehle se bana hua hai ya Firebase Rules sahi nahi lage')}
+  await finishLogin(u,k,id,a,{name:id,role:'admin'})}catch(e){lgMsg(errTxt(e.message))}}
+function doLogout(){localStorage.removeItem('fleetAuth');location.reload()}
+async function chPw(){const pw=$('npw').value;if(pw.length<6){$('pwMsg').textContent='Password kam az kam 6 akshar ka rakho';return}
+ try{await fbTok();const j=await authReq('update',{idToken:FA.tok,password:pw,returnSecureToken:true},FA.key);FA.tok=j.idToken;FA.ref=j.refreshToken;FA.exp=Date.now()+(+j.expiresIn)*1000;saveFA();$('npw').value='';$('pwMsg').textContent='Password badal gaya.'}catch(e){$('pwMsg').textContent='Nahi badla: '+errTxt(e.message)}}
+const metaNames=()=>{try{return JSON.parse(localStorage.getItem('fleetMeta'))||{}}catch(e){return{}}};
+function applyRole(){const role=FA.role,meta=metaNames();$('whoTxt').textContent=FA.name+' ('+role+')';
+ const show={R:role!=='manager',M:role!=='manager',S:true,G:role==='manager'||role==='admin',A:role==='admin'};['R','M','S','G','A'].forEach(x=>$('tb'+x).hidden=!show[x]);
+ $('syncSec').hidden=$('mergeSec').hidden=role==='manager';
+ const sel=$('engSel'),en=FA.engs||[];sel.hidden=role==='manager'||!en.length;sel.innerHTML=en.map(e=>`<option value="${mgEsc(e)}">${mgEsc((meta[e]&&meta[e].name)||e)}</option>`).join('');sel.value=EID;sel.onchange=()=>{setEngine(sel.value);location.reload()};
+ if(role!=='manager'&&!en.length){$('repMain').innerHTML='<div class="section"><h2>Koi engine assign nahi</h2><p class="note">Admin se apna engine assign karwao.</p></div>'}
+ if(role==='manager')showTab('G')}
+async function refreshProfile(){try{const prof=await fb('GET','users/'+FA.uid);if(!prof||prof.active===false){doLogout();return}
+ const meta=await fb('GET','meta/engines')||{};localStorage.setItem('fleetMeta',JSON.stringify(meta));
+ const role=prof.role||'operator',engs=role==='admin'?Object.keys(meta):Object.keys(prof.engines||{});
+ const ch=role!==FA.role||JSON.stringify([...engs].sort())!==JSON.stringify([...(FA.engs||[])].sort());
+ FA.role=role;FA.name=prof.name||FA.name;FA.engs=engs;saveFA();
+ if(ch){if(role!=='manager'&&engs.length){if(!engs.includes(EID))setEngine(engs[0])}else localStorage.removeItem('fleetEng');location.reload()}}catch(e){}}
+function mergeData(R){const up={r:[],m:false,c:false,l:[],s:false};let down=0;const rr=R.r||{};
+ new Set([...Object.keys(reports),...Object.keys(rr)]).forEach(d=>{const L=reports[d],X=rr[d],lu=L?(L._u||0):-1,xu=X?(X._u||0):-1;if(X&&xu>lu){reports[d]=X;down++}else if(L&&lu>xu)up.r.push(d)});
+ try{localStorage.setItem(K('dprReports'),JSON.stringify(reports))}catch(e){}
+ const lm=MT.get(),lmu=lm._u||0,rmu=R.m?(R.m._u||0):-1;if(R.m&&rmu>lmu){MT.set(R.m);down++}else if(lmu>rmu)up.m=true;
+ const cu=chemU(),ru=R.c?(+R.c.u||0):-1;if(R.c&&Array.isArray(R.c.n)&&ru>cu){R.c.n.forEach((n,i)=>{if(n&&i<CH.length)CH[i]=n});try{localStorage.setItem(K('dprChem'),JSON.stringify(CH));localStorage.setItem(K('dprChemU'),ru)}catch(e){}showChem();down++}else if(cu>ru)up.c=true;
+ try{if(typeof RL!=='undefined'){const m2=RL.mergeRemote(R.l||{});down+=m2.down;up.l=m2.up}}catch(e){}
+ try{if(typeof SC!=='undefined'&&SC.getData){const lo=SC.getData(),ru2=R.s?(+R.s.u||0):-1;if(R.s&&Array.isArray(R.s.e)&&ru2>lo.u){SC.setData(R.s);down++}else if(lo.u>0&&lo.u>ru2)up.s=true}}catch(e){}
+ return{down,up}}
+
+let _qs=null;function queueSync(){clearTimeout(_qs);_qs=setTimeout(()=>{if(!NOLOGIN&&FA&&EID&&navigator.onLine)syncNow(true)},2500)}
+window.addEventListener('online',()=>{if(!NOLOGIN&&FA&&EID)syncNow(true)});
+
+async function syncNow(silent){if(!FA||!EID){if(!silent)sStat('Is account par koi engine assign nahi.');return}
+ sStat('Syncing...');
+ try{const rem=(await fb('GET','engines/'+EID))||{};
+  const R={r:{},m:null,c:null,l:{},s:null};Object.keys(rem.r||{}).forEach(d=>{try{R.r[d]=JSON.parse(rem.r[d])}catch(e){}});Object.keys(rem.l||{}).forEach(k=>{try{R.l[k]=JSON.parse(rem.l[k])}catch(e){}});try{if(rem.s)R.s=JSON.parse(rem.s)}catch(e){}
+  try{if(rem.m)R.m=JSON.parse(rem.m)}catch(e){}try{if(rem.c)R.c=JSON.parse(rem.c)}catch(e){}
+  const cur=$('date').value,{down,up}=mergeData(R);
+  const put=(path,obj)=>fb('PUT','engines/'+EID+'/'+path,JSON.stringify(obj));
+  await Promise.all([...up.r.map(d=>put('r/'+d,reports[d])),...(up.m?[put('m',MT.get())]:[]),...(up.c?[put('c',{u:chemU(),n:CH})]:[]),...up.l.map(k=>put('l/'+k,RL.get()[k])),...(up.s?[put('s',SC.getData())]:[])]);
+  renderOld();if(cur&&R.r[cur]&&reports[cur]===R.r[cur])openDate(cur);
+  sStat('Sync complete ('+new Date().toLocaleTimeString()+'): '+down+' naye aaye, '+(up.r.length+(up.m?1:0)+(up.c?1:0)+up.l.length+(up.s?1:0))+' bheje.')}
+ catch(e){sStat('Sync nahi hua. Internet check karo ('+e.message+').')}}
+function mergeFile(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(typeof o!=='object'||Array.isArray(o))throw 0;
+  const R={r:{},m:o._maint||null,c:(Array.isArray(o._chem)&&o._chemU)?{u:o._chemU,n:o._chem}:null};Object.keys(o).forEach(k=>{if(k[0]!=='_')R.r[k]=o[k]});
+  const cur=$('date').value,{down}=mergeData(R);renderOld();if(cur&&R.r[cur]&&reports[cur]===R.r[cur])openDate(cur);alert('Merge complete: '+down+' item naye/updated aaye.')}catch(e){alert('File sahi nahi hai.')}inp.value=''};r.readAsText(f)}
+const ltoday=()=>new Date().toLocaleDateString('sv');
+function mgDue(p,h){const a=parseFloat(p.prev),b=parseFloat(p.add);if(!Number.isFinite(a)||!Number.isFinite(b)||!Number.isFinite(h))return null;const r=Math.round((a+b-h)*10)/10;return r<0?{c:'bad',t:'Overdue by '+(-r)+' h'}:r<=50?{c:'warn',t:'Due in '+r+' h'}:null}
+const mgEsc=v=>String(v==null?'':v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+async function mgGet(eid){const rem=(await fb('GET','engines/'+eid))||{};const o={r:{},m:null,c:null,l:{}};
+ Object.keys(rem.l||{}).forEach(k=>{try{const x=JSON.parse(rem.l[k]);if(!x._del)o.l[k]=x}catch(e){}});
+ Object.keys(rem.r||{}).forEach(d=>{try{const x=JSON.parse(rem.r[d]);if(!x._del)o.r[d]=x}catch(e){}});try{if(rem.m)o.m=JSON.parse(rem.m)}catch(e){}try{if(rem.c)o.c=JSON.parse(rem.c)}catch(e){}return o}
+function mgCard(e,D,i){const ds=Object.keys(D.r).sort();if(!ds.length)return`<div class="mgc"><div class="mgh"><b>${mgEsc(e.n)}</b><span class="warn">Abhi koi report nahi</span></div></div>`;
+ const last=ds[ds.length-1],L=D.r[last],gen=(parseFloat(L.genNow)||0)-(parseFloat(L.genPrev)||0),run=(parseFloat(L.runNow)||0)-(parseFloat(L.runPrev)||0),stop=(L.stops||[]).reduce((a,x)=>a+mins(x.d),0),av=Math.max(0,1440-stop)/1440*100;
+ const h=parseFloat(L.runNow),al=[];if(D.m&&Array.isArray(D.m.groups))D.m.groups.forEach(g=>(g.pts||[]).forEach(p=>{const d=mgDue(p,h);if(d)al.push({g:g.name,n:p.n,d})}));
+ const sub=last===ltoday();
+ let det='<h4>Pichli reports</h4>'+ds.slice(-7).reverse().map(d=>{const x=D.r[d],g=(parseFloat(x.genNow)||0)-(parseFloat(x.genPrev)||0),r=(parseFloat(x.runNow)||0)-(parseFloat(x.runPrev)||0),sm=(x.stops||[]).reduce((a,y)=>a+mins(y.d),0);return`<div class="mr"><span>${d}</span><b>${fmt(g,0)} kWh | ${fmt(r,1)} h | ${(Math.max(0,1440-sm)/14.4).toFixed(1)}%</b></div>`}).join('');
+ const names=(D.c&&Array.isArray(D.c.n))?D.c.n:CH;det+='<h4>Chemical ('+last+')</h4>'+names.map((n,k)=>L['cu'+k]!==undefined&&L['cu'+k]!==''?`<div class="mr"><span>${mgEsc(n)}</span><b>${mgEsc(L['cu'+k])}</b></div>`:'').join('')||'';
+ det+='<h4>Stoppage ('+last+')</h4>'+((L.stops||[]).length?(L.stops||[]).map(x=>`<div class="mr"><span>${mgEsc(x.r||'-')}</span><b>${mgEsc(x.a||'')} - ${mgEsc(x.b||'')} (${mgEsc(x.d||'-')})</b></div>`).join(''):'<div class="mr"><span>Koi stoppage nahi</span><b>-</b></div>');
+ det+='<h4>Maintenance Due</h4>'+(al.length?al.map(a=>`<div class="mal ${a.d.c==='warn'?'w':''}"><b>${mgEsc(a.g)}: ${mgEsc(a.n)}</b><br>${a.d.t}</div>`).join(''):'<div class="mr"><span>Koi alert nahi</span><b class="ok">OK</b></div>');
+ if(D.m&&D.m.recs&&D.m.recs.length)det+='<h4>Maintenance Records</h4>'+D.m.recs.slice(0,5).map(r=>`<div class="mr"><span>${mgEsc(r.t)}${r.d?' ('+mgEsc(r.d)+')':''}</span><b>${mgEsc(r.prev||'-')} → ${mgEsc(r.pres||'-')} h</b></div>`).join('');
+ const lk=Object.keys(D.l||{}).sort();if(lk.length){const k=lk[lk.length-1],x=D.l[k],hm=v=>{const q=/^(\d+):(\d{2})$/.exec(v||'');return q?+q[1]*60+ +q[2]:0};let tc=0,tg=0;(x.rows||[]).forEach(r=>{tc+=hm(r.sc);tg+=hm(r.sg)});
+  det+='<h4>15 Days Report ('+k.slice(0,7)+(k.slice(-1)==='1'?', 1 to 15':', 16 to end')+')</h4><div class="mr"><span>SMU</span><b>'+mgEsc(x.prev||'-')+' &rarr; '+mgEsc(x.cur||'-')+'</b></div><div class="mr"><span>Customer stoppage</span><b>'+hhmm(tc)+'</b></div><div class="mr"><span>Generator stoppage</span><b>'+hhmm(tg)+'</b></div><div class="mr"><span>Total downtime</span><b>'+hhmm(tc+tg)+'</b></div>'}
+ if(L.remarks)det+='<h4>Remarks</h4><div class="mr"><span>'+mgEsc(L.remarks)+'</span></div>';
+ return`<div class="mgc"><div class="mgh" onclick="this.parentNode.querySelector('.mgd').hidden=!this.parentNode.querySelector('.mgd').hidden"><b>${mgEsc(e.n)}</b><span class="${sub?'ok':'warn'}">${sub?'Aaj ki report aa gayi':'Aakhri: '+last}</span></div>
+ <div class="mgs"><div><b>${fmt(gen,0)}</b>kWh</div><div><b>${fmt(run,1)}</b>Run Hr</div><div><b>${av.toFixed(1)}%</b>Avail</div><div><b class="${al.length?'bad':''}">${al.length}</b>Due alerts</div></div>
+ <div class="mgd" hidden>${det}</div></div>`}
+
+async function mgRefresh(){const l=$('mgList');$('mgStat').textContent='Loading...';let meta;
+ try{meta=await fb('GET','meta/engines')||{};localStorage.setItem('fleetMeta',JSON.stringify(meta))}catch(e){$('mgStat').textContent='Load nahi hua: '+e.message;return}
+ const ids=Object.keys(meta).sort();if(!ids.length){l.innerHTML='<p class="note">Abhi koi engine nahi. Admin se engine add karwao.</p>';$('mgStat').textContent='';return}
+ const out=[];let fail=0;
+ await Promise.all(ids.map(async(id,i)=>{const n=(meta[id]&&meta[id].name)||id;try{out[i]=mgCard({n},await mgGet(id),i)}catch(x){fail++;out[i]=`<div class="mgc"><b>${mgEsc(n)}</b> <span class="bad">load nahi hua (${mgEsc(x.message)})</span></div>`}}));
+ l.innerHTML=out.join('');$('mgStat').textContent='Updated '+new Date().toLocaleTimeString()+(fail?' ('+fail+' engine load nahi hue)':'')}
+let AD={meta:{},users:{}};
+async function adLoad(){$('adStat').textContent='Loading...';try{AD.meta=await fb('GET','meta/engines')||{};AD.users=await fb('GET','users')||{};localStorage.setItem('fleetMeta',JSON.stringify(AD.meta));adRender();$('adStat').textContent=''}catch(e){$('adStat').textContent='Load nahi hua: '+e.message}}
+function adRender(){const ids=Object.keys(AD.meta).sort(),nm=i=>(AD.meta[i]&&AD.meta[i].name)||i;
+ $('adEng').innerHTML=ids.length?ids.map(i=>`<div class="mr"><span>${mgEsc(nm(i))} <small>(${i})</small></span><button class="mx sm" onclick="adDelEng('${i}',this)">Remove</button></div>`).join(''):'<p class="note">Abhi koi engine nahi.</p>';
+ $('adNewEng').innerHTML=ids.map(i=>`<label style="display:flex;gap:8px;align-items:center;margin-top:4px"><input type="checkbox" class="auE" value="${i}" style="width:auto;margin:0"> ${mgEsc(nm(i))}</label>`).join('')||'<p class="note">Pehle engine add karo.</p>';
+ $('adUsers').innerHTML=Object.keys(AD.users).map(uid=>{const u=AD.users[uid],me=uid===FA.uid;return`<div class="mc"><b>${mgEsc(u.name||u.id)}</b> <small>ID: ${mgEsc(u.id||'')}${me?' (aap)':''}</small>
+ <label>Role</label><select ${me?'disabled':''} onchange="adRole('${uid}',this.value)"><option value="operator" ${u.role==='operator'?'selected':''}>Operator</option><option value="manager" ${u.role==='manager'?'selected':''}>Manager</option><option value="admin" ${u.role==='admin'?'selected':''}>Admin</option></select>
+ ${u.role==='operator'?'<label>Engines</label>'+ids.map(i=>`<label style="display:flex;gap:8px;align-items:center;margin-top:4px"><input type="checkbox" style="width:auto;margin:0" ${(u.engines&&u.engines[i])?'checked':''} onchange="adToggle('${uid}','${i}',this.checked)"> ${mgEsc(nm(i))}</label>`).join(''):''}
+ ${me?'':`<button class="mx sm" style="margin-top:10px" onclick="adDelUser('${uid}',this)">Remove user</button>`}</div>`}).join('')}
+async function adAddEng(){const id=$('aeId').value.trim().toLowerCase(),n=$('aeN').value.trim();if(!/^[a-z0-9_-]+$/.test(id)||!n){alert('Engine ID (chhote akshar/number) aur naam likho');return}
+ try{await fb('PUT','meta/engines/'+id,{name:n});$('aeId').value='';$('aeN').value='';adLoad()}catch(e){$('adStat').textContent='Add nahi hua: '+e.message}}
+function sure2(b,t){if(!b.dataset.sure){b.dataset.sure='1';b.textContent='Tap again to confirm';setTimeout(()=>{if(b.isConnected){b.dataset.sure='';b.textContent=t}},3000);return false}return true}
+async function adDelEng(id,b){if(!sure2(b,'Remove'))return;try{await fb('DELETE','meta/engines/'+id);adLoad()}catch(e){$('adStat').textContent=e.message}}
+async function adDelUser(uid,b){if(!sure2(b,'Remove user'))return;try{await fb('DELETE','users/'+uid);adLoad()}catch(e){$('adStat').textContent=e.message}}
+async function adRole(uid,r){try{await fb('PUT','users/'+uid+'/role',r);AD.users[uid].role=r;adRender()}catch(e){$('adStat').textContent=e.message}}
+async function adToggle(uid,eid,on){const e=Object.assign({},AD.users[uid].engines||{});if(on)e[eid]=true;else delete e[eid];try{await fb('PUT','users/'+uid+'/engines',e);AD.users[uid].engines=e}catch(x){$('adStat').textContent=x.message}}
+async function adCreate(){const id=$('auId').value.trim().toLowerCase(),name=$('auN').value.trim(),pw=$('auP').value,role=$('auR').value,m=$('auMsg');
+ if(!/^[a-z0-9._-]+$/.test(id)||!name||pw.length<6){m.textContent='ID, naam aur password (6+) likho';return}
+ const eo={};document.querySelectorAll('.auE:checked').forEach(c=>eo[c.value]=true);if(role==='operator'&&!Object.keys(eo).length){m.textContent='Operator ke liye kam az kam ek engine chuno';return}
+ m.textContent='Ban raha hai...';
+ try{let a;try{a=await authReq('signUp',{email:id+DOM,password:pw,returnSecureToken:true},FA.key)}catch(e){if(/EMAIL_EXISTS/.test(e.message)){try{a=await authReq('signInWithPassword',{email:id+DOM,password:pw,returnSecureToken:true},FA.key)}catch(x){throw new Error('Ye ID pehle bani thi. Wohi purana password likho ya doosri ID lo')}}else throw e}
+  await fb('PUT','users/'+a.localId,{id,name,role,engines:eo});m.textContent='Ban gaya: ID '+id+' | Password '+pw;['auId','auN','auP'].forEach(x=>$(x).value='');document.querySelectorAll('.auE').forEach(c=>c.checked=false);adLoad()}catch(e){m.textContent=errTxt(e.message)}}
+if(NOLOGIN){$('loginBox').hidden=true;document.querySelector('.who').hidden=true;['S','G','A'].forEach(x=>$('tb'+x).hidden=true)}else if(FA){$('loginBox').hidden=true;applyRole();refreshProfile();setTimeout(()=>{if(EID)syncNow(true)},1500)}else{$('loginBox').hidden=false;$('lgUrl').value=localStorage.getItem('fleetUrl')||FB_URL;$('lgKey').value=localStorage.getItem('fleetKey')||FB_KEY}
+
+
+(function(){
+
+var KEY = K('stoppage_entries_v2'), KEYU = K('stoppage_u_v2');
+var entries = [];
+try { entries = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { entries = []; }
+var pendingYes = null;
+function ask(text, cb) {
+  document.getElementById('scBoxTxt').textContent = text;
+  pendingYes = cb;
+  document.getElementById('scOv').style.display = 'flex';
+}
+function boxNo() { pendingYes = null; document.getElementById('scOv').style.display = 'none'; }
+function boxYes() {
+  var cb = pendingYes;
+  pendingYes = null;
+  document.getElementById('scOv').style.display = 'none';
+  if (cb) cb();
+}
+var toastTimer = null;
+function toast(t) {
+  var el = document.getElementById('scToast');
+  el.textContent = t;
+  el.style.display = 'block';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { el.style.display = 'none'; }, 2200);
+}
+
+function save() { try { localStorage.setItem(KEY, JSON.stringify(entries)); localStorage.setItem(KEYU, Date.now()); } catch (e) {} try { queueSync(); } catch (e) {} }
+function getData() { return {u: +localStorage.getItem(KEYU) || 0, e: entries}; }
+function setData(o) { entries = o.e; try { localStorage.setItem(KEY, JSON.stringify(entries)); localStorage.setItem(KEYU, o.u); } catch (e) {} render(); }
+
+function fmt(mins) { return Math.floor(mins / 60) + ' hr ' + (mins % 60) + ' min'; }
+
+// auto colon: 1430 -> 14:30
+function autoFormat(el) {
+  var v = el.value.replace(/[^0-9]/g, '').slice(0, 4);
+  if (v.length > 2) v = v.slice(0, 2) + ':' + v.slice(2);
+  el.value = v;
+}
+
+function toMins(str) {
+  var m = /^(\d{1,2}):(\d{2})$/.exec(str);
+  if (!m) return null;
+  var h = parseInt(m[1], 10), mi = parseInt(m[2], 10);
+  if (h > 23 || mi > 59) return null;
+  return h * 60 + mi;
+}
+
+// agar start time stop se chota ho to agle din ka maan lete hain
+function diffMins() {
+  var s = toMins(document.getElementById('scStop').value);
+  var t = toMins(document.getElementById('scStart').value);
+  if (s === null || t === null) return null;
+  var d = t - s;
+  if (d < 0) d += 1440;
+  return d;
+}
+
+function getReason() {
+  var v = document.getElementById('scReason').value;
+  if (v === '__other__') return document.getElementById('scReasonText').value.trim();
+  return v;
+}
+
+function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+
+function lowerFirst(r) {
+  if (r && /^[A-Z][a-z]/.test(r)) r = r.charAt(0).toLowerCase() + r.slice(1);
+  return r;
+}
+
+function msgFrom(o) {
+  var lines = ['Date.' + o.date];
+  var word = o.mode === 'Tripped' ? 'Tripped' : 'Stop';
+  if (o.stop) lines.push('Genset ' + word + ' at ' + o.stop);
+  if (o.start) lines.push('Genset start at ' + o.start);
+  var d = o.mins;
+  if (o.stop && o.start && d !== null && d !== undefined) {
+    lines.push('Total Stopage ' + pad2(Math.floor(d / 60)) + ':' + pad2(d % 60));
+  }
+  var r = lowerFirst(o.reason || '');
+  if (r) lines.push('Due to ' + r);
+  if (o.rh) lines.push('RH-' + o.rh);
+  if (o.mwh) lines.push('MWH-' + o.mwh);
+  return lines.join('\n');
+}
+
+function todayStr() {
+  var n = new Date();
+  return pad2(n.getDate()) + '-' + pad2(n.getMonth() + 1) + '-' + n.getFullYear();
+}
+
+var dateAuto = true;
+function refreshDate() {
+  if (dateAuto) document.getElementById('scDate').value = new Date().toLocaleDateString('sv');
+}
+function entryDate() {
+  refreshDate();
+  var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(document.getElementById('scDate').value || '');
+  return m ? m[3] + '-' + m[2] + '-' + m[1] : todayStr();
+}
+function clearDate() { dateAuto = true; refreshDate(); render(); calc(); }
+
+function buildMsg() {
+  return msgFrom({
+    date: entryDate(),
+    mode: stopMode,
+    stop: document.getElementById('scStop').value,
+    start: document.getElementById('scStart').value,
+    mins: diffMins(),
+    reason: getReason(),
+    rh: document.getElementById('scRh').value.trim(),
+    mwh: document.getElementById('scMwh').value.trim()
+  });
+}
+
+var stopMode = 'Stop';
+function setMode(m) {
+  stopMode = m;
+  document.getElementById('scMStop').className = m === 'Stop' ? 'on' : '';
+  document.getElementById('scMTrip').className = m === 'Tripped' ? 'on' : '';
+  document.getElementById('scStopLbl').textContent = (m === 'Tripped' ? 'Genset Tripped Time' : 'Genset Stop Time');
+  calc();
+}
+
+function calc() { document.getElementById('scMsg').value = buildMsg(); }
+
+function copyMsg() {
+  var ta = document.getElementById('scMsg');
+  var btn = document.getElementById('scCopyBtn');
+  function done() {
+    btn.textContent = 'Copied!';
+    setTimeout(function () { btn.textContent = 'Copy Message'; }, 1500);
+  }
+  function fallback() {
+    ta.focus(); ta.select(); ta.setSelectionRange(0, 99999);
+    try { document.execCommand('copy'); done(); } catch (e) { toast('Copy failed. Please select and copy the message manually.'); }
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(ta.value).then(done, fallback);
+  } else { fallback(); }
+}
+
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+function addEntry() {
+  var d = diffMins();
+  var stopV = document.getElementById('scStop').value.trim(), startV = document.getElementById('scStart').value.trim();
+  var startOnly = (d === null && !stopV && /^([01]\d|2[0-3]):[0-5]\d$/.test(startV));
+  if (d === null && !startOnly) { toast('Please enter the Stop and Start time (HH:MM).'); return; }
+  if (startOnly) d = 0;
+  entries.push({
+    stop: document.getElementById('scStop').value,
+    start: document.getElementById('scStart').value,
+    rh: document.getElementById('scRh').value.trim(),
+    mwh: document.getElementById('scMwh').value.trim(),
+    reason: getReason(),
+    mode: startOnly ? 'Start' : stopMode,
+    mins: d,
+    date: entryDate()
+  });
+  var ready = msgFrom(entries[entries.length - 1]);
+  save();
+  document.getElementById('scStop').value = '';
+  document.getElementById('scStart').value = '';
+  document.getElementById('scRh').value = '';
+  document.getElementById('scMwh').value = '';
+  document.getElementById('scReason').value = '';
+  document.getElementById('scReasonText').value = '';
+  document.getElementById('scReasonText').style.display = 'none';
+  render();
+  setMode('Stop');
+  document.getElementById('scMsg').value = ready;
+}
+
+function showMsg(i) {
+  closeList();
+  var e = entries[i];
+  var o = {date: String(e.date || '').replace(/\//g, '-'), mode: e.mode, stop: e.stop, start: e.start, mins: e.mins, reason: e.reason, rh: e.rh, mwh: e.mwh};
+  document.getElementById('scMsg').value = msgFrom(o);
+  window.scrollTo(0, document.getElementById('scMsg').getBoundingClientRect().top + window.pageYOffset - 80);
+}
+
+function del(i) {
+  entries.splice(i, 1);
+  save();
+  render();
+}
+
+function clearAll() {
+  if (!entries.length) { toast('The list is already empty.'); return; }
+  ask('Delete all entries?', function () {
+    entries = [];
+    save();
+    render();
+  });
+}
+
+var openDay = '';
+function toggleDay(k) { openDay = (openDay === k ? '' : k); render(); }
+function normDate(d) { return String(d || '').replace(/\//g, '-'); }
+function dayKey(d) { var m = /^(\d{1,2})-(\d{1,2})-(\d{4})$/.exec(normDate(d).trim()); return m ? (+m[3]) * 10000 + (+m[2]) * 100 + (+m[1]) : 0; }
+function tmin(t) { var m = /^(\d{1,2}):(\d{2})$/.exec(String(t || '').trim()); return m ? (+m[1]) * 60 + (+m[2]) : 0; }
+
+function render() {
+  var days = {}, order = [], html = '';
+  entries.forEach(function (e, i) {
+    var k = normDate(e.date);
+    if (!days[k]) { days[k] = {t: 0, items: []}; order.push(k); }
+    days[k].t += e.mins;
+    days[k].items.push(i);
+  });
+  order.sort(function (a, b) { return dayKey(b) - dayKey(a); });
+  order.forEach(function (k) {
+    var dd = days[k];
+    dd.items.sort(function (a, b) { return tmin(entries[a].stop) - tmin(entries[b].stop); });
+    var isOpen = (openDay === k);
+    html += '<button type="button" class="dayh" onclick="SC.toggleDay(\'' + k + '\')"><span>' + (isOpen ? '&#9662; ' : '&#9656; ') + esc(k) + ' (' + dd.items.length + ')</span><span>' + fmt(dd.t) + '</span></button>';
+    html += '<div class="daybody" style="display:' + (isOpen ? 'block' : 'none') + '">';
+    dd.items.forEach(function (i) {
+      var e = entries[i];
+      html += '<div class="item">' +
+        (e.mode === 'Start' ? '<div>Genset Start: ' + esc(e.start) + '</div>' : (e.mode === 'Tripped' ? '<div>Tripped: ' : '<div>Stop: ') + esc(e.stop) + ' &nbsp; Start: ' + esc(e.start) + '</div>') +
+        (e.rh ? '<div>RH: ' + esc(e.rh) + '</div>' : '') +
+        (e.mwh ? '<div>MWH: ' + esc(e.mwh) + '</div>' : '') +
+        (e.reason ? '<div>Reason: ' + esc(e.reason) + '</div>' : '') +
+        (e.mode === 'Start' ? '' : '<div class="d">' + fmt(e.mins) + '</div>') +
+        '<div class="acts"><button class="a1" onclick="SC.showMsg(' + i + ')">Message</button>' +
+        '<button class="a2" onclick="SC.del(' + i + ')">Delete</button></div></div>';
+    });
+    html += '</div>';
+  });
+  var lst = document.getElementById('scList'), st = lst.scrollTop;
+  lst.innerHTML = html || '<div class="empty">No entries yet</div>';
+  lst.scrollTop = st;
+  document.getElementById('scListBtn').textContent = 'Stoppage List (' + entries.length + ')';
+  // Total sirf chuni hui date ke din ka (agle din ka total alag)
+  var sel = normDate(entryDate());
+  document.getElementById('scGrand').textContent = fmt(days[sel] ? days[sel].t : 0);
+  document.getElementById('scGrandLbl').textContent = 'Total Stoppage (' + (sel === normDate(todayStr()) ? 'Today' : sel) + ')';
+}
+function openList() { document.getElementById('scListOv').style.display = 'flex'; }
+function closeList() { document.getElementById('scListOv').style.display = 'none'; }
+function refresh() { refreshDate(); render(); }
+
+['scStop', 'scStart'].forEach(function (id) {
+  document.getElementById(id).addEventListener('input', function () { autoFormat(this); calc(); });
+});
+['scRh', 'scMwh', 'scReasonText'].forEach(function (id) {
+  document.getElementById(id).addEventListener('input', calc);
+});
+document.getElementById('scReason').addEventListener('change', calc);
+document.getElementById('scDate').addEventListener('input', function () { dateAuto = false; render(); calc(); });
+document.getElementById('scDate').addEventListener('change', function () { dateAuto = !this.value; refreshDate(); render(); calc(); });
+refreshDate();
+document.getElementById('scReason').addEventListener('change', function () {
+  var t = document.getElementById('scReasonText');
+  if (this.value === '__other__') { t.style.display = 'block'; t.focus(); }
+  else { t.style.display = 'none'; t.value = ''; }
+});
+function scTab(t) {
+  document.getElementById('scPageStop').style.display = t === 'stop' ? 'block' : 'none';
+  document.getElementById('scPageTime').style.display = t === 'time' ? 'block' : 'none';
+  document.getElementById('scTabStop').className = t === 'stop' ? 'on' : '';
+  document.getElementById('scTabTime').className = t === 'time' ? 'on' : '';
+}
+
+function addTimeRow() {
+  var wrap = document.getElementById('scTrows');
+  var n = wrap.querySelectorAll('.trow').length;
+  var div = document.createElement('div');
+  div.className = 'trow';
+  var h = '';
+  if (n > 0) {
+    h += '<div class="oprow"><div class="opwrap"><div class="opbox" onclick="SC.toggleOp(this)"><span class="opv">+</span><span class="arr"></span></div>' +
+      '<div class="oppop"><div onclick="SC.pickOp(this,\'+\')">+</div><div onclick="SC.pickOp(this,\'-\')">-</div></div>' +
+      '<input type="hidden" class="op" value="+"></div>';
+    if (n > 1) h += '<button class="rm" onclick="SC.rmTimeRow(this)">Remove</button>';
+    h += '</div>';
+  }
+  h += '<div class="tbox"><div class="hd"><div>Hour</div><div>Minutes</div><div>Second</div></div>' +
+    '<div class="in"><input type="text" class="th" inputmode="numeric" placeholder="H">' +
+    '<input type="text" class="tm" inputmode="numeric" placeholder="M">' +
+    '<input type="text" class="ts" inputmode="numeric" placeholder="S"></div></div>';
+  div.innerHTML = h;
+  wrap.appendChild(div);
+}
+
+function hideOps() {
+  var p = document.querySelectorAll('.oppop');
+  for (var i = 0; i < p.length; i++) p[i].style.display = 'none';
+}
+
+function toggleOp(el) {
+  var pop = el.parentNode.querySelector('.oppop');
+  var open = pop.style.display === 'block';
+  hideOps();
+  pop.style.display = open ? 'none' : 'block';
+}
+
+function pickOp(el, v) {
+  var wrap = el.parentNode.parentNode;
+  wrap.querySelector('.opv').textContent = v;
+  wrap.querySelector('.op').value = v;
+  hideOps();
+}
+
+document.addEventListener('click', function (e) {
+  var t = e.target;
+  while (t && t !== document) {
+    if (t.className && String(t.className).indexOf('opwrap') > -1) return;
+    t = t.parentNode;
+  }
+  hideOps();
+});
+
+function rmTimeRow(btn) {
+  var row = btn.parentNode.parentNode;
+  row.parentNode.removeChild(row);
+}
+
+function numOf(el) {
+  var v = parseInt(String(el.value).replace(/[^0-9]/g, ''), 10);
+  return isNaN(v) ? 0 : v;
+}
+
+function calcTime() {
+  var rows = document.querySelectorAll('#scTrows .trow');
+  var total = 0;
+  for (var i = 0; i < rows.length; i++) {
+    var r = rows[i];
+    var secs = numOf(r.querySelector('.th')) * 3600 + numOf(r.querySelector('.tm')) * 60 + numOf(r.querySelector('.ts'));
+    if (i === 0) total = secs;
+    else if (r.querySelector('.op').value === '+') total += secs;
+    else total -= secs;
+  }
+  var neg = total < 0;
+  var a = Math.abs(total);
+  var hh = Math.floor(a / 3600), mm = Math.floor((a % 3600) / 60), ss = a % 60;
+  document.getElementById('scTres').value = (neg ? '-' : '') + hh + ' hr ' + mm + ' min ' + ss + ' sec  (' + pad2(hh) + ':' + pad2(mm) + ':' + pad2(ss) + ')';
+}
+
+addTimeRow();
+addTimeRow();
+render();
+calc();
+
+function exportXls() {
+  if (!entries.length) { toast('Please add an entry first.'); return; }
+  var rows = [['Genset Stoppage Report'], ['Genset', document.getElementById('hOgr').value.trim()], ['Location', document.getElementById('hLoc').value.trim()], ['Date', todayStr()], [], ['Date', 'Type', 'Stop Time', 'Start Time', 'Duration (HH:MM)', 'Minutes', 'RH', 'MWH', 'Reason']], tot = 0;
+  entries.forEach(function (e) {
+    tot += e.mins;
+    rows.push([e.date || '', e.mode === 'Tripped' ? 'Tripped' : (e.mode === 'Start' ? 'Genset Start' : 'Stop'), e.stop, e.start, pad2(Math.floor(e.mins / 60)) + ':' + pad2(e.mins % 60), e.mins, e.rh || '', e.mwh || '', e.reason || '']);
+  });
+  rows.push([], ['Total Stoppage', '', '', '', pad2(Math.floor(tot / 60)) + ':' + pad2(tot % 60), tot]);
+  var dt = {}; entries.forEach(function (e) { var k = normDate(e.date); dt[k] = (dt[k] || 0) + e.mins; });
+  rows.push([], ['Day-wise Total']);
+  Object.keys(dt).sort(function (a, b) { return dayKey(a) - dayKey(b); }).forEach(function (k) { rows.push([k, '', '', '', pad2(Math.floor(dt[k] / 60)) + ':' + pad2(dt[k] % 60), dt[k]]); });
+  csvDl('Stoppage_' + todayStr() + '.csv', rows);
+}
+window.SC = {getData: getData, setData: setData, toggleDay: toggleDay, openList: openList, closeList: closeList, refresh: refresh, refreshDate: refreshDate, clearDate: clearDate, scTab: scTab, setMode: setMode, copyMsg: copyMsg, addEntry: addEntry, clearAll: clearAll, boxNo: boxNo, boxYes: boxYes, addTimeRow: addTimeRow, calcTime: calcTime, showMsg: showMsg, del: del, toggleOp: toggleOp, pickOp: pickOp, rmTimeRow: rmTimeRow, exportXls: exportXls};
+})();
+
+(function(){['hOgr','hLoc'].forEach(function(id){var e=document.getElementById(id),k=K('hdr_'+id);try{e.value=localStorage.getItem(k)||''}catch(x){}e.addEventListener('input',function(){try{localStorage.setItem(k,e.value)}catch(x){}})})})();
+const hdrInfo=()=>[['Genset',$('hOgr').value.trim()],['Location',$('hLoc').value.trim()]];
+
+const getDailyReports=()=>reports;
+var MON=(function(){
+const $=id=>document.getElementById((id==='hOgr'||id==='hLoc')?id:'mo_'+id);
+const num=id=>{let v=parseFloat($(id).value);return Number.isFinite(v)?v:0};
+const has=id=>$(id).value!=='';
+const KEY=K('monReports');
+let reports={};try{reports=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){reports={}}
+const base=['date','maxLoad','genNow','genPrev','gasNow','gasPrev','runNow','runPrev','startNow','startPrev','oilNow','oilPrev','oilAdded','oilUsed','oilTopup','remarks','prepBy','supBy'];
+const ids=base.concat(CH.map((_,i)=>'cp'+i),CH.map((_,i)=>'cn'+i),CH.map((_,i)=>'cu'+i));
+const curM=()=>new Date().toLocaleDateString('sv').slice(0,7);
+const MON3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const dimOf=m=>{const x=/^(\d{4})-(\d{2})$/.exec(m||'');return x?new Date(+x[1],+x[2],0).getDate():30};
+let curDays=null,manual=false,info='';
+const MM=()=>(curDays||dimOf($('date').value))*1440;
+function periodLabel(m){m=m||$('date').value;const x=/^(\d{4})-(\d{2})$/.exec(m||'');return x?MON3[+x[2]-1]+' 01 To '+dimOf(m)+', '+x[1]:''}
+function showPeriod(){const e=$('period');if(!e)return;const m=$('date').value,x=/^(\d{4})-(\d{2})$/.exec(m||'');e.innerHTML=x?MON3[+x[2]-1]+' 01 To '+dimOf(m)+' <small>'+x[1]+'</small><span class="car">▾</span>':'Mahina chuno <span class="car">▾</span>'}
+function setInfo(t){info=t;const e=$('autoNote');if(e)e.textContent=t}
+const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(reports))}catch(e){}};
+function chemRender(){$('ch').innerHTML=CH.map((n,i)=>`<div class="chem"><input class="chn" id="mo_chn${i}" type="text" placeholder="Chemical name"><div class="g3"><div><label>Previous</label><input id="mo_cp${i}" type="number" step="any"></div><div><label>Present</label><input id="mo_cn${i}" type="number" step="any"></div><div><label>Consumption</label><input id="mo_cu${i}" type="number" step="any"></div></div></div>`).join('');syncNames();
+ CH.forEach((n,i)=>{$('chn'+i).oninput=()=>{CH[i]=$('chn'+i).value;saveChem();const e=document.getElementById('chn'+i);if(e)e.value=CH[i]}})}
+function syncNames(){CH.forEach((n,i)=>{const e=$('chn'+i);if(e)e.value=n})}
+function stops(){return [...document.querySelectorAll('#mo_stops .stop')].map(s=>({r:s.querySelector('.sr').value,a:s.querySelector('.sa').value,b:s.querySelector('.sb').value,d:s.querySelector('.sd').value}))}
+function addStop(r='',d='',a='',b=''){let div=document.createElement('div');div.className='stop';
+ div.innerHTML=`<div><label>Genset Stop</label><input class="sa" type="time"></div><div><label>Genset Start</label><input class="sb" type="time"></div><div><label>Duration (HH:MM)</label><input class="sd" type="text" readonly placeholder="Auto"></div><div style="display:flex;align-items:flex-end"><button style="width:100%" onclick="this.closest('.stop').remove();MON.edited()">Remove</button></div><div class="full"><label>Reason</label><input class="sr" type="text" placeholder="Reason for stoppage"></div>`;
+ div.querySelector('.sr').value=r;div.querySelector('.sa').value=a||'';div.querySelector('.sb').value=b||'';div.querySelector('.sd').value=d||'';
+ const upd=()=>{let x=div.querySelector('.sa').value,y=div.querySelector('.sb').value,t=m=>+m.slice(0,2)*60+ +m.slice(3,5);div.querySelector('.sd').value=(x&&y)?hhmm((t(y)-t(x)+1440)%1440):'';manual=true;calc()};
+ div.querySelector('.sa').addEventListener('input',upd);div.querySelector('.sb').addEventListener('input',upd);
+ $('stops').appendChild(div)}
+function calc(){
+ showPeriod();
+ let gen=num('genNow')-num('genPrev'),run=num('runNow')-num('runPrev'),stop=stops().reduce((a,s)=>a+mins(s.d),0),T=MM();
+ let ok=has('genNow')&&has('genPrev');
+ $('generation').textContent=ok?fmt(gen,0):'—';$('avgLoad').textContent=ok&&run>0?fmt(gen/run):'—';
+ $('loadFactor').textContent=ok&&run>0&&num('maxLoad')>0?fmt(gen/run/num('maxLoad')*100)+'%':'—';
+ $('totalStop').textContent=hhmm(stop);$('availability').textContent=hhmm(T-stop);$('availabilityPct').textContent=fmt(Math.max(0,T-stop)/T*100)+'%';
+ let gas=has('gasNow')&&has('gasPrev')?num('gasNow')-num('gasPrev'):null;
+ $('gasUsed').textContent=gas===null?'—':fmt(gas,2);$('gasPerKwh').textContent=gas===null||!(gen>0)?'—':fmt(gas/gen,4);
+ $('runDiff').textContent=has('runNow')&&has('runPrev')?fmt(run,2):'—';$('startDiff').textContent=has('startNow')&&has('startPrev')?fmt(num('startNow')-num('startPrev'),0):'—';
+ let oil=has('oilUsed')?num('oilUsed'):null;
+ $('oilPerKwh').textContent=oil===null||!(gen>0)?'—':fmt(oil*0.89*1000/gen,3)}
+function collect(){let d={};ids.forEach(id=>d[id]=$(id).value);d.stops=stops();return d}
+function oilFromUsed(){if(has('oilUsed')&&has('oilPrev'))$('oilNow').value=r2(num('oilPrev')+num('oilAdded')-num('oilUsed'))}
+function oilFromNow(){if(has('oilNow')&&has('oilPrev'))$('oilUsed').value=r2(num('oilPrev')+num('oilAdded')-num('oilNow'));else if(!has('oilNow'))$('oilUsed').value=''}
+function chFromUsed(i){if(has('cu'+i)&&has('cp'+i))$('cn'+i).value=r2(num('cp'+i)-num('cu'+i))}
+function chFromNow(i){if(has('cn'+i)&&has('cp'+i))$('cu'+i).value=r2(num('cp'+i)-num('cn'+i));else if(!has('cn'+i))$('cu'+i).value=''}
+function fill(d){curDays=d._days||null;ids.forEach(id=>$(id).value=d[id]??'');$('stops').innerHTML='';(d.stops||[]).forEach(s=>addStop(s.r,s.d,s.a,s.b));
+ if(!has('oilUsed')&&has('oilNow')&&has('oilPrev'))$('oilUsed').value=r2(num('oilPrev')+num('oilAdded')-num('oilNow'));
+ CH.forEach((_,i)=>{if(!has('cu'+i)&&has('cn'+i)&&has('cp'+i))chFromNow(i)});calc()}
+function fresh(m){let ks=Object.keys(reports).filter(k=>k<m).sort(),p=ks.length?reports[ks[ks.length-1]]:null,d={date:m,maxLoad:'1400',oilAdded:'0'};
+ if(p){d.prepBy=p.prepBy;d.supBy=p.supBy;d.maxLoad=p.maxLoad||'1400';d.genPrev=p.genNow||p.genPrev;d.runPrev=p.runNow||p.runPrev;d.startPrev=p.startNow||p.startPrev;d.gasPrev=p.gasNow||p.gasPrev;d.oilPrev=p.oilNow||p.oilPrev;
+  CH.forEach((_,i)=>{d['cp'+i]=p['cn'+i]||p['cp'+i]||''})}
+ fill(d)}
+
+function autoFill(m){
+ const D=getDailyReports(),ks=Object.keys(D).filter(k=>k.slice(0,7)===m&&!D[k]._del).sort();
+ if(!ks.length)return null;
+ const R=ks.map(k=>D[k]),first=k=>{for(const r of R){if(r[k]!==undefined&&r[k]!=='')return r[k]}return ''},last=k=>{for(let i=R.length-1;i>=0;i--){if(R[i][k]!==undefined&&R[i][k]!=='')return R[i][k]}return ''};
+ const sum=f=>R.reduce((a,r)=>{const v=parseFloat(f(r));return a+(Number.isFinite(v)?v:0)},0);
+ const L=R[R.length-1],d={date:m,maxLoad:last('maxLoad')||'1400',prepBy:last('prepBy'),supBy:last('supBy')};
+ [['genPrev','genNow'],['runPrev','runNow'],['startPrev','startNow'],['gasPrev','gasNow'],['oilPrev','oilNow']].forEach(([p,n])=>{d[p]=first(p);d[n]=last(n)});
+ d.oilAdded=String(r2(sum(r=>r.oilAdded)));
+ const used=sum(r=>(r.oilUsed!==undefined&&r.oilUsed!=='')?r.oilUsed:((r.oilNow!==''&&r.oilNow!==undefined&&r.oilPrev!==''&&r.oilPrev!==undefined)?(parseFloat(r.oilPrev)+(parseFloat(r.oilAdded)||0)-parseFloat(r.oilNow)):0));
+ d.oilUsed=String(r2(used));const tp=sum(r=>r.oilTopup);d.oilTopup=tp?String(r2(tp)):'';
+ CH.forEach((_,i)=>{d['cp'+i]=first('cp'+i);d['cn'+i]=last('cn'+i);d['cu'+i]=String(r2(sum(r=>(r['cu'+i]!==undefined&&r['cu'+i]!=='')?r['cu'+i]:((r['cp'+i]!==''&&r['cp'+i]!==undefined&&r['cn'+i]!==''&&r['cn'+i]!==undefined)?parseFloat(r['cp'+i])-parseFloat(r['cn'+i]):0))))});
+ const dl=k=>k.slice(8,10)+'-'+MON3[+k.slice(5,7)-1];
+ d.stops=[];d.remarks=[];
+ ks.forEach(k=>{(D[k].stops||[]).forEach(x=>d.stops.push({r:dl(k)+': '+(x.r||''),a:x.a,b:x.b,d:x.d}));if(D[k].remarks&&String(D[k].remarks).trim())d.remarks.push(dl(k)+': '+String(D[k].remarks).trim())});
+ d.remarks=d.remarks.join('\n');
+ const u=k=>Date.UTC(+k.slice(0,4),+k.slice(5,7)-1,+k.slice(8,10)),span=Math.round((u(ks[ks.length-1])-u(ks[0]))/864e5)+1;
+ d._days=span;
+ d._info='Daily Reports se auto: '+dl(ks[0])+' se '+dl(ks[ks.length-1])+' tak ('+span+' din, '+ks.length+' reports)'+(span<dimOf(m)?'. Poora mahina abhi complete nahi, availability inhi din ke hisab se.':'.');
+ return d}
+function auto(){const m=$('date').value||curM(),a=autoFill(m);if(!a){alert('Is mahine ki koi Daily Report save nahi mili.');return}fill(a);manual=false;setInfo(a._info)}
+function refresh(){if(!manual)openM($('date').value||curM())}
+function edited(){manual=true;calc()}
+function addStopUser(){manual=true;addStop()}
+function openM(m){const sv=reports[m];
+ if(sv&&sv._manual){fill(sv);manual=true;setInfo('Ye report haath se edit/save hui hai. Daily Reports se dobara bharne ke liye upar wala button dabayen.')}
+ else{const a=autoFill(m);
+  if(a){fill(a);manual=false;setInfo(a._info)}
+  else if(sv){fill(sv);manual=false;setInfo('')}
+  else{fresh(m);manual=false;setInfo('Is mahine ki Daily Reports nahi mili, data haath se bharo.')}}
+ renderOld()}
+function save(){let d=collect();if(!d.date){alert('Pehle month select karo.');return}d._u=Date.now();d._manual=manual;if(curDays)d._days=curDays;reports[d.date]=d;persist();renderOld();alert('Monthly report '+d.date+' ke liye save ho gayi.')}
+function renderOld(){let ks=Object.keys(reports).sort().reverse();$('oldList').innerHTML=ks.length?ks.map(k=>{let r=reports[k],g=(parseFloat(r.genNow)||0)-(parseFloat(r.genPrev)||0);return `<div class="old"><span>${periodLabel(k)} — ${fmt(g,0)} kWh</span><div><button class="secondary" onclick="MON.pick('${k}')">Open / Edit</button><button class="secondary" onclick="MON.del('${k}')">Delete</button></div></div>`}).join(''):'<p class="note">Abhi koi monthly report save nahi hai.</p>'}
+function pick(k){$('date').value=k;openM(k);window.scrollTo(0,0)}
+function delM(k){if(!confirm(k+' ki monthly report delete karni hai?'))return;delete reports[k];persist();renderOld()}
+function reset(){if(!confirm('Current monthly report clear karni hai? (Daily Reports se dobara auto bhar dega)'))return;const m=$('date').value||curM();delete reports[m];persist();openM(m)}
+function exportCsvM(){
+let gen=num('genNow')-num('genPrev'),run=num('runNow')-num('runPrev');
+let rows=[['Monthly Report - One Month'],...hdrInfo(),['Period',periodLabel()],['Data',info],[],['Parameter','Value','Unit'],
+['Present Generation Reading',num('genNow'),'kWh'],['Previous Generation Reading',num('genPrev'),'kWh'],['Unit Generated',gen,'kWh'],['Max Load',num('maxLoad'),'kW'],['Average Load',run>0?gen/run:0,'kW'],['Plant Loading',$('loadFactor').textContent,'%'],
+['Gas Used',$('gasUsed').textContent,'m3'],['Gas per kWh',$('gasPerKwh').textContent,'m3/kWh'],['Running Hours Difference',$('runDiff').textContent,'Hrs'],['Starts Difference',$('startDiff').textContent,'Starts'],
+['Oil Consumption',$('oilUsed').value,'L'],['Oil Consumption g/kWh',$('oilPerKwh').textContent,'g/kWh'],['Remarks',$('remarks').value,''],[],
+['Stoppage Report'],['Reason','Genset Stop','Genset Start','Duration (HH:MM)'],...stops().map(s=>[s.r,s.a,s.b,s.d]),['Total Stoppage',$('totalStop').textContent,'HH:MM'],
+['Plant Availability',$('availability').textContent,'HH:MM'],['Availability %',$('availabilityPct').textContent,'%'],[],
+['Chemical Consumption'],['Chemical','Previous','Present','Consumption (Previous - Present)'],...CH.map((n,i)=>[n,$('cp'+i).value,$('cn'+i).value,$('cu'+i).value]),[],
+['Report Prepared By',$('prepBy').value,'Supervisor Signature',$('supBy').value]];
+let csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');
+dl('Monthly_Report_'+($('date').value||'report')+'.csv',new Blob([csv],{type:'text/csv;charset=utf-8'}));}
+function exportPdfM(){
+const P=[[]];let y=800;
+const put=(it,g)=>{if(y<60){P.push([]);y=800;}it.forEach(i=>P[P.length-1].push({x:i[0],y:y,t:String(i[1]),b:i[2],s:i[3]||10}));y-=g||15;};
+const H=t=>{y-=8;put([[40,t,1,12]],20);};
+const R=(a,b,c)=>put([[40,a],[300,b],[460,c||'']]);
+const T=(a,b,c,d,bold)=>put([[40,a,bold],[200,b,bold],[330,c,bold],[450,d,bold]]);
+put([[40,'Monthly Report - One Month',1,16]],22);put([[40,'Genset: '+$('hOgr').value+'     Location: '+$('hLoc').value]],15);put([[40,'Report Period: '+periodLabel()]],12);put([[40,String(info).slice(0,95),0,9]],10);
+H('Monthly Report - One Month');
+R('Present Generation Reading',$('genNow').value,'kWh');R('Previous Generation Reading',$('genPrev').value,'kWh');R('Unit Generated',$('generation').textContent,'kWh');
+R('Max Load',$('maxLoad').value,'kW');R('Average Load',$('avgLoad').textContent,'kW');R('Plant Loading',$('loadFactor').textContent);
+R('Gas Used',$('gasUsed').textContent,'m3');R('Gas per kWh',$('gasPerKwh').textContent,'m3/kWh');
+R('Running Hours (Present / Previous)',$('runNow').value+' / '+$('runPrev').value,'Hrs');R('Running Hours Difference',$('runDiff').textContent,'Hrs');
+R('Starts (Present / Previous)',$('startNow').value+' / '+$('startPrev').value);R('Starts Difference',$('startDiff').textContent);
+R('Oil Consumption',$('oilUsed').value,'L');R('Oil Consumption',$('oilPerKwh').textContent,'g/kWh');
+put([[40,'Remarks:',1]]);($('remarks').value.match(/.{1,85}/g)||['-']).forEach(l=>put([[50,l]]));
+H('Stoppage Report');T('Reason','Genset Stop','Genset Start','Duration',1);
+const st=stops();(st.length?st:[{r:'None',a:'',b:'',d:''}]).forEach(s=>T(s.r.slice(0,30),s.a||'-',s.b||'-',s.d||'-'));
+R('Total Stoppage',$('totalStop').textContent,'HH:MM');R('Plant Availability',$('availability').textContent,'HH:MM');R('Availability',$('availabilityPct').textContent);
+H('Chemical Consumption');T('Chemical','Previous','Present','Consumption',1);
+CH.forEach((n,i)=>T(n,$('cp'+i).value||'-',$('cn'+i).value||'-',$('cu'+i).value||'-'));
+if(y<120){P.push([]);y=800;}
+y-=30;put([[40,'Report Prepared By: '+($('prepBy').value||'______________________')],[300,'Supervisor Signature: '+($('supBy').value||'______________________')]],15);
+const esc=t=>t.replace(/[^\x20-\x7E]/g,'').replace(/([()\\])/g,'\\$1');
+const o=[];o[1]='<</Type/Catalog/Pages 2 0 R>>';
+o[2]='<</Type/Pages/Kids['+P.map((_,k)=>(5+2*k)+' 0 R').join(' ')+']/Count '+P.length+'>>';
+o[3]='<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>';o[4]='<</Type/Font/Subtype/Type1/BaseFont/Helvetica-Bold>>';
+P.forEach((pg,k)=>{let s=pg.map(i=>'BT /F'+(i.b?2:1)+' '+i.s+' Tf '+i.x+' '+i.y+' Td ('+esc(i.t)+') Tj ET').join('\n')+'\nBT /F1 8 Tf 40 25 Td (Page '+(k+1)+' of '+P.length+') Tj ET';
+o[5+2*k]='<</Type/Page/Parent 2 0 R/MediaBox[0 0 595 842]/Resources<</Font<</F1 3 0 R/F2 4 0 R>>>>/Contents '+(6+2*k)+' 0 R>>';
+o[6+2*k]='<</Length '+s.length+'>>\nstream\n'+s+'\nendstream';});
+let out='%PDF-1.4\n',off=[];for(let i=1;i<o.length;i++){off[i]=out.length;out+=i+' 0 obj\n'+o[i]+'\nendobj\n';}
+let xr=out.length;out+='xref\n0 '+o.length+'\n0000000000 65535 f \n'+off.slice(1).map(n=>String(n).padStart(10,'0')+' 00000 n \n').join('')+'trailer\n<</Size '+o.length+'/Root 1 0 R>>\nstartxref\n'+xr+'\n%%EOF';
+dl('Monthly_Report_'+($('date').value||'report')+'.pdf',new Blob([out],{type:'application/pdf'}));}
+function setAll(o){if(!o||typeof o!=='object')return;Object.assign(reports,o);persist();renderOld();openM($('date').value||curM())}
+chemRender();
+$('oilUsed').addEventListener('input',()=>{if(!has('oilUsed'))$('oilNow').value='';else oilFromUsed()});
+$('oilNow').addEventListener('input',oilFromNow);
+['oilPrev','oilAdded'].forEach(id=>$(id).addEventListener('input',()=>{if(has('oilUsed'))oilFromUsed();else oilFromNow()}));
+CH.forEach((_,i)=>{$('cu'+i).addEventListener('input',()=>{if(!has('cu'+i))$('cn'+i).value='';else chFromUsed(i)});
+ $('cn'+i).addEventListener('input',()=>chFromNow(i));
+ $('cp'+i).addEventListener('input',()=>{if(has('cu'+i))chFromUsed(i);else chFromNow(i)})});
+ids.forEach(id=>$(id).addEventListener('input',calc));
+ids.forEach(id=>{if(id!=='date')$(id).addEventListener('input',()=>{manual=true})});
+$('date').addEventListener('change',()=>openM($('date').value||curM()));
+$('date').value=curM();openM($('date').value);
+return{save,exportCsv:exportCsvM,exportPdf:exportPdfM,reset,addStop:addStopUser,calc,edited,auto,refresh,pick,del:delM,syncNames,get:()=>reports,set:setAll};
+})();
+
+const _dprKey=()=>K('dprReports'),_rlKey=()=>K('rlLogs'),_skKey=()=>K('stoppage_entries_v2'),_hdrKey=k=>K('hdr_'+k);
+const RL=(function(){
+const $=id=>document.getElementById(id);
+const MON3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONF=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const KEYS=['ts','te','ss','se','ms','me','lo','hi','sc','sg','rm'];
+const AF=['ts','te','ss','se','ms','me','sc','sg','rm'];   // Stoppage tab se auto bharne wali fields
+const KEY=_rlKey(),SKEY=_skKey();
+let logs={};try{logs=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){logs={}}
+const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(logs))}catch(e){}};
+const curM=()=>new Date().toLocaleDateString('sv').slice(0,7);
+const dimOf=m=>{const x=/^(\d{4})-(\d{2})$/.exec(m||'');return x?new Date(+x[1],+x[2],0).getDate():30};
+const HALF=()=>$('rlHalf').value==='2'?2:1;
+const K=(m,h)=>m+'-'+h;
+const parseK=k=>{const x=/^(\d{4}-\d{2})-([12])$/.exec(k||'');return x?{m:x[1],h:+x[2]}:null};
+const range=(m,h)=>h===2?[16,dimOf(m)]:[1,15];
+const daysIn=(m,h)=>{const r=range(m,h);return r[1]-r[0]+1};
+const periodLabel=(m,h)=>{if(h===undefined){const p=parseK(m);if(!p)return '';m=p.m;h=p.h}
+ const x=/^(\d{4})-(\d{2})$/.exec(m||'');if(!x)return '';const r=range(m,h);return MONF[+x[2]-1]+' '+x[1]+' ('+r[0]+' to '+r[1]+')'};
+const pad2=n=>String(n).padStart(2,'0');
+const hhmm=m=>{m=Math.max(0,Math.round(m));return pad2(Math.floor(m/60))+':'+pad2(m%60)};
+const fmtT=m=>pad2(Math.floor(m/60))+':'+pad2(m%60);
+const esc=v=>String(v==null?'':v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+// "130" / "1:30" / "0130" -> "01:30"
+function normHM(v){v=String(v||'').trim();if(!v)return '';let h,m,x;
+ if(x=/^(\d{1,3}):(\d{1,2})$/.exec(v)){h=+x[1];m=+x[2]}
+ else if(x=/^(\d{3,4})$/.exec(v)){h=+v.slice(0,-2);m=+v.slice(-2)}
+ else if(x=/^(\d{1,2})$/.exec(v)){h=+v;m=0}
+ else return null;
+ if(m>59)return null;return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')}
+const hmMin=v=>{const x=/^(\d+):(\d{2})$/.exec(v||'');return x?+x[1]*60+ +x[2]:0};
+const tMin=v=>{const x=/^(\d{2}):(\d{2})$/.exec(v||'');return x&&+x[1]<24&&+x[2]<60?+x[1]*60+ +x[2]:null};
+const nT=v=>{const x=/^(\d{1,2}):(\d{2})$/.exec(String(v||'').trim());return x?pad2(+x[1])+':'+x[2]:''};
+const cleanNum=v=>{const n=parseFloat(String(v==null?'':v).replace(/,/g,''));return Number.isFinite(n)?String(n):''};
+// Customer wali reasons: Customer Demand, K.E Failure, Over load short circuit, Gas Pressure low
+const CUST=['customerdemand','kefailure','overload','shortcircuit','gaspressurelow'];
+const isCust=r=>{const s=String(r||'').toLowerCase().replace(/[^a-z]/g,'');return CUST.some(w=>s.includes(w))};
+
+function showPeriod(){const m=$('rlMonth').value,x=/^(\d{4})-(\d{2})$/.exec(m||'');
+ $('rlPeriod').innerHTML=x?periodLabel(m,HALF())+'<span class="car">▾</span>':'Select month <span class="car">▾</span>'}
+
+const blankRows=(m,h)=>{const r=range(m,h);return Array.from({length:r[1]-r[0]+1},(_,i)=>({d:r[0]+i}))};
+function rowHtml(r,x){const d=+r.d||1,lab=pad2(d)+'-'+x[2]+'-'+x[1].slice(2);
+ const T='type="text" inputmode="numeric" maxlength="5" placeholder="HH:MM" class="tmi"',N='type="number" step="any" inputmode="decimal"',H='type="text" inputmode="numeric" placeholder="HH:MM" class="hmi"';
+ const c=(k,t)=>`<input data-k="${k}" ${t} value="${esc(r[k])}">`;
+ return `<tr data-d="${d}" data-key="${esc(r.k||'')}" data-a="${r.A?esc(JSON.stringify(r.A)):''}"><td class="dt"><div class="dtc"><span>${lab}</span><span class="rlbs noprint"><button type="button" class="rlb" data-act="add" title="Add row">+</button><button type="button" class="rlb" data-act="del" title="Remove row">×</button></span></div></td>
+ <td class="tm">${c('ts',T)}</td><td class="tm">${c('te',T)}</td>
+ <td class="nm">${c('ss',N)}</td><td class="nm">${c('se',N)}</td>
+ <td class="nm">${c('ms',N)}</td><td class="nm">${c('me',N)}</td>
+ <td class="nm">${c('lo',N)}</td><td class="nm">${c('hi',N)}</td>
+ <td class="hm">${c('sc',H)}</td><td class="hm">${c('sg',H)}</td>
+ <td class="td"></td>
+ <td class="rm">${c('rm','type="text"')}</td></tr>`}
+function fixBtns(){const trs=[...$('rlBody').querySelectorAll('tr')],cnt={};trs.forEach(t=>cnt[t.dataset.d]=(cnt[t.dataset.d]||0)+1);
+ trs.forEach(t=>{const b=t.querySelector('[data-act="del"]');if(b)b.style.display=(cnt[t.dataset.d]>1&&!t.dataset.key)?'':'none'})}
+function buildRows(m,rows){const x=/^(\d{4})-(\d{2})$/.exec(m);if(!x)return;
+ $('rlBody').innerHTML=rows.map(r=>rowHtml(r,x)).join('');fixBtns()}
+
+function rowsData(){return [...$('rlBody').querySelectorAll('tr')].map(tr=>{const o={d:+tr.dataset.d};KEYS.forEach(k=>o[k]=tr.querySelector('[data-k="'+k+'"]').value);
+ if(tr.dataset.key)o.k=tr.dataset.key;if(tr.dataset.a){try{o.A=JSON.parse(tr.dataset.a)}catch(e){}}return o})}
+
+// Previous SMU = report ki shuruaat ka SMU (pehli SMU Start), Current SMU = sab se naya SMU (aakhri SMU Stop).
+// Aap ne khud likha ho to wo nahi badalta.
+function setAuto(el,v){if(el.value===''||el.value===(el.dataset.auto||''))el.value=v;el.dataset.auto=v}
+function autoSMU(){const m=$('rlMonth').value;if(!/^\d{4}-\d{2}$/.test(m||''))return;let first='',last='';
+ $('rlBody').querySelectorAll('tr').forEach(tr=>{const v=k=>tr.querySelector('[data-k="'+k+'"]').value.trim(),ss=v('ss'),se=v('se');
+  if(!first&&ss)first=ss;if(ss)last=ss;if(se)last=se});
+ const p=prevLog(K(m,HALF()));
+ setAuto($('rlPrev'),first||(p&&p.cur)||'');setAuto($('rlCur'),last)}
+function calc(){let stop=0,tc=0,tg=0;const m=$('rlMonth').value,x=/^(\d{4})-(\d{2})$/.exec(m||''),n=new Date(),tdk=n.getFullYear()*10000+(n.getMonth()+1)*100+n.getDate(),byD={};
+ [...$('rlBody').querySelectorAll('tr')].forEach(tr=>{
+  const v=k=>tr.querySelector('[data-k="'+k+'"]').value;
+  const c=hmMin(v('sc')),g=hmMin(v('sg')),d=(v('sc')||v('sg'))?c+g:null;
+  tr.querySelector('.td').textContent=d===null?'':hhmm(d);if(d!==null){stop+=d;tc+=c;tg+=g}
+  const o=byD[tr.dataset.d]||(byD[tr.dataset.d]={dt:0,has:false});if(d!==null)o.dt+=d;if(!o.has&&KEYS.some(k=>v(k)!==''))o.has=true});
+ // Total Hours = jis din ka data hai (aaj se pehle ka) us din ke 24 ghante minus us din ki downtime
+ let run=0;if(x)Object.keys(byD).forEach(dn=>{const o=byD[dn];if(o.has&&(+x[1]*10000+ +x[2]*100+ +dn)<tdk)run+=Math.max(0,1440-o.dt)});
+ $('rlTotHrs').textContent=hhmm(run);$('rlTotStop').textContent=hhmm(stop);$('rlTotC').textContent=hhmm(tc);$('rlTotG').textContent=hhmm(tg);$('rlTotD').textContent=hhmm(stop);$('rlOutOf').textContent=daysIn($('rlMonth').value,HALF())*24;autoSMU()}
+
+// ---------- Stoppage tab se data ----------
+// Har stoppage = ek row: START = pichli stoppage ka Start time, STOP = is stoppage ka Stop time,
+// SMU/MW Hours STOP = is stoppage ke RH/MWH, SMU/MW START = pichli stoppage ke RH/MWH.
+// Stoppage ka time Customer ya Generator column me jata hai (reason ke hisab se).
+// Raat 12 bje ka MW HOURS = us date ki Daily Report ka Present Meter Reading (kWh) / 1000
+const dkStr=dk=>Math.floor(dk/10000)+'-'+pad2(Math.floor(dk/100)%100)+'-'+pad2(dk%100);
+const dkNext=dk=>{const t=new Date(Math.floor(dk/10000),Math.floor(dk/100)%100-1,dk%100+1);return t.getFullYear()*10000+(t.getMonth()+1)*100+t.getDate()};
+const mwhNum=v=>{if(v===''||v==null)return '';const n=parseFloat(v);return Number.isFinite(n)?(n>=100000?n/1000:n).toFixed(1):''};
+// Raat 12 bje ka MW HOURS: us date ki Daily Report ka Present Meter Reading (kWh)/1000,
+// ya agle din ki Daily Report ka Previous Meter Reading.
+const mwhDaily=dk=>{let R={};try{R=JSON.parse(localStorage.getItem(_dprKey())||'{}')||{}}catch(e){}
+ const a=R[dkStr(dk)],b=R[dkStr(dkNext(dk))];
+ return mwhNum(a&&!a._del?a.genNow:'')||mwhNum(b&&!b._del?b.genPrev:'')};
+function genFromStop(m){const x=/^(\d{4})-(\d{2})$/.exec(m);if(!x)return{};const Y=+x[1],M=+x[2];
+ let list=[];try{list=JSON.parse(localStorage.getItem(SKEY)||'[]')||[]}catch(e){}
+ const ev=[];
+ list.forEach(e=>{const p=/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})$/.exec(String(e.date||'').trim()),a=tMin(nT(e.stop)),b=tMin(nT(e.start));
+  const so=(a===null&&!String(e.stop||'').trim());
+  if(!p||b===null||(a===null&&!so))return;ev.push({dk:+p[3]*10000+ +p[2]*100+ +p[1],a:so?b:a,b,so,e})});
+ ev.sort((p,q)=>p.dk-q.dk||p.a-q.a);
+ const n=new Date(),todayDk=n.getFullYear()*10000+(n.getMonth()+1)*100+n.getDate();
+ const out={};
+ const push=(dk,r)=>{const y=Math.floor(dk/10000),mo=Math.floor(dk/100)%100,d=dk%100;if(y===Y&&mo===M)(out[d]=out[d]||[]).push(r)};
+ const nextDk=dk=>{const t=new Date(Math.floor(dk/10000),Math.floor(dk/100)%100-1,dk%100+1);return t.getFullYear()*10000+(t.getMonth()+1)*100+t.getDate()};
+ const addH=(v,h)=>{if(v==='')return '';const n=parseFloat(v);return Number.isFinite(n)?String(Math.round(n+h)):''};
+ let rh='',mw='',carry=null,known=false,i=0;
+ // raat 12 bje ki row: SMU = pichla SMU + chalte hue ghante. MW Hours khali (aap khud likho).
+ const endRow=(dk,t,k)=>{const done=dk<todayDk,r={ts:k==='RUN'?'00:00':'',te:done?'00:00':'',ss:rh,ms:mw,k};
+  if(done){r.se=addH(rh,(1440-tMin(t))/60);r.me=mwhDaily(dk);rh=r.se;mw=r.me}return r};
+ if(ev.length){let d=ev[0].dk;const last=Math.max(ev[ev.length-1].dk,todayDk);
+  while(d<=last){const g=[];while(i<ev.length&&ev[i].dk===d)g.push(ev[i++]);
+   let cur='00:00';if(carry&&carry.dk===d)cur=carry.t;carry=null;
+   if(g.length){const seen={};
+    g.forEach((q,j)=>{const e=q.e,se=cleanNum(e.rh),me=cleanNum(e.mwh);
+     if(q.so){if(se!=='')rh=se;mw=me;cur=fmtT(q.b);return}
+     let k='S'+fmtT(q.a);seen[k]=(seen[k]||0)+1;if(seen[k]>1)k+='#'+seen[k];
+     let mins=Number(e.mins);if(!Number.isFinite(mins))mins=(q.b-q.a+1440)%1440;
+     const crossing=(j===g.length-1&&q.b<q.a);
+     const r={ts:crossing?'':fmtT(q.b),te:fmtT(q.a),ss:rh,se,ms:mw,me,k};r.rm=String(e.reason||'').trim();if(isCust(e.reason))r.sc=hhmm(mins);else r.sg=hhmm(mins);
+     push(d,r);rh=se;mw=me;
+     if(crossing){carry={dk:nextDk(d),t:fmtT(q.b)};cur=null}else cur=fmtT(q.b)});
+    if(cur!==null)push(d,endRow(d,cur,'END'));
+    known=true}
+   else if(known&&d<todayDk)push(d,endRow(d,cur,cur==='00:00'?'RUN':'END'));
+   else if(cur!=='00:00')push(d,endRow(d,cur,'END'));
+   d=nextDk(d)}}
+ return out}
+
+const modified=o=>!!(o.lo||o.hi||AF.some(f=>{const v=o[f]||'',a=(o.A&&o.A[f])||'';return v!==''&&v!==a}));
+const isEmptyRow=o=>!KEYS.some(k=>o[k]);
+// Table ko Stoppage entries ke saath milata hai. Aap ne jo khud badla (ya Min/Max/Remarks) wo bacha rehta hai.
+function sync(){const m=$('rlMonth').value;if(!/^\d{4}-\d{2}$/.test(m||''))return 0;
+ const G=genFromStop(m);if(!Object.keys(G).length){calc();return 0}
+ const cur=rowsData(),rg=range(m,HALF()),out=[];let n=0;
+ for(let d=rg[0];d<=rg[1];d++){const old=cur.filter(r=>r.d===d),g=G[d];
+  if(!g||!g.length){if(old.length)out.push(...old);else out.push({d});continue}
+  const used=new Set();
+  g.forEach(x=>{const o=old.find(r=>r.k&&r.k===x.k&&!used.has(r))||((x.k==='RUN'||x.k==='END')&&g.length===1&&old.length===1&&!old[0].k&&!used.has(old[0])?old[0]:null);if(o)used.add(o);
+   const r={d,k:x.k,A:{}};
+   AF.forEach(f=>{const av=x[f]||'',ov=o?(o[f]||''):'',oa=o&&o.A?(o.A[f]||''):'';r[f]=(!o||ov===''||ov===oa)?av:ov;r.A[f]=av});
+   r.lo=o?o.lo:'';r.hi=o?o.hi:'';out.push(r);n++});
+  old.forEach(o=>{if(used.has(o))return;
+   if(!o.k){if(!isEmptyRow(o))out.push(o);return}
+   if(modified(o)){const c=Object.assign({},o);delete c.k;delete c.A;out.push(c)}});
+ }
+ // MW START = pichli row ka MW STOP (aap ka likha hua bhi chalta hai)
+ for(let q=0;q<out.length;q++){const r=out[q];let base=q?out[q-1].me:'';
+  if(!q){const pd=new Date(+m.slice(0,4),+m.slice(5,7)-1,r.d-1);base=mwhDaily(pd.getFullYear()*10000+(pd.getMonth()+1)*100+pd.getDate())}
+  if(r.k&&base&&(r.ms===''||r.ms===undefined||r.ms===(r.A&&r.A.ms))){r.ms=base;if(r.A)r.A.ms=base}}
+ buildRows(m,out);calc();return n}
+function syncBtn(){const n=sync();alert(n?n+' stoppage entries loaded.':'No stoppage entries found for this period.')}
+
+function prevLog(k){const ks=Object.keys(logs).filter(x=>x<k&&live(x)).sort();return ks.length?logs[ks[ks.length-1]]:null}
+function openM(){const m=$('rlMonth').value;showPeriod();if(!/^\d{4}-\d{2}$/.test(m||''))return;
+ const h=HALF(),k=K(m,h),sv=live(k)?logs[k]:null,r0=range(m,h)[0];
+ buildRows(m,sv&&sv.rows&&sv.rows.length?sv.rows.map((r,i)=>Object.assign({},r,{d:r.d||r0+i})):blankRows(m,h));
+ const p=prevLog(k);
+ $('rlCur').dataset.auto=sv?(sv.ac||''):'';$('rlPrev').dataset.auto=sv?(sv.ap||''):'';
+ if(sv){$('rlCur').value=sv.cur||'';$('rlPrev').value=sv.prev||''}
+ else{$('rlCur').value='';$('rlPrev').value=''}
+ calc();sync();renderOld()}
+
+function save(){const m=$('rlMonth').value;if(!m){alert('Please select a month.');return}
+ const h=HALF();logs[K(m,h)]={month:m,half:h,cur:$('rlCur').value,prev:$('rlPrev').value,ac:$('rlCur').dataset.auto||'',ap:$('rlPrev').dataset.auto||'',rows:rowsData(),_u:Date.now()};persist();renderOld();try{queueSync()}catch(e){}alert('Log saved: '+periodLabel(m,h))}
+const live=k=>!!(logs[k]&&!logs[k]._del);
+function renderOld(){const ks=Object.keys(logs).filter(live).sort().reverse();
+ $('rlOld').innerHTML=ks.length?ks.map(k=>`<div class="old"><span>${periodLabel(k)}</span><div><button class="secondary" onclick="RL.pick('${k}')">Open / Edit</button><button class="secondary" onclick="RL.del('${k}',this)">Delete</button></div></div>`).join(''):'<p class="note">No saved logs yet.</p>'}
+function pick(k){const p=parseK(k);if(!p)return;$('rlMonth').value=p.m;$('rlHalf').value=String(p.h);openM();window.scrollTo(0,0)}
+// confirm() APK me nahi chalta -> do bar dabane par hota hai
+function twice(btn,fn){if(!btn){fn();return}
+ if(btn.dataset.arm){delete btn.dataset.arm;btn.textContent=btn.dataset.t;fn();return}
+ btn.dataset.t=btn.textContent;btn.dataset.arm='1';btn.textContent='Tap again to confirm';
+ setTimeout(()=>{if(btn.dataset.arm){delete btn.dataset.arm;btn.textContent=btn.dataset.t}},3000)}
+function del(k,btn){twice(btn,()=>{logs[k]={_del:1,_u:Date.now()};persist();renderOld();try{queueSync()}catch(e){}})}
+function reset(btn){twice(btn,()=>{const m=$('rlMonth').value||curM();logs[K(m,HALF())]={_del:1,_u:Date.now()};persist();openM();try{queueSync()}catch(e){}})}
+// purane (poore mahine wale) logs ko 2 hisso me baant do
+function migrate(){let ch=0;Object.keys(logs).forEach(k=>{if(!/^\d{4}-\d{2}$/.test(k))return;const sv=logs[k]||{},rs=(sv.rows||[]).map((r,i)=>Object.assign({},r,{d:r.d||i+1}));
+ const mk=(h,rows,c,p)=>{const kk=K(k,h);if(!logs[kk])logs[kk]={month:k,half:h,cur:c,prev:p,rows,_u:sv._u||Date.now()}};
+ mk(1,rs.filter(r=>r.d<=15),'',sv.prev||'');mk(2,rs.filter(r=>r.d>15),sv.cur||'','');delete logs[k];ch=1});if(ch)persist()}
+migrate();
+
+function csvDl(name,rows){const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"').join(',')).join('\r\n');dl(name,new Blob([csv],{type:'text/csv;charset=utf-8'}));}
+function excel(){const m=$('rlMonth').value,h=HALF();if(!m){alert('Please select a month.');return}
+ const x=/^(\d{4})-(\d{2})$/.exec(m),rows=[['Fortnightly Generation Report'],['Genset',$('hOgr').value.trim()],['Location',$('hLoc').value.trim()],['Model',$('rlModel').value.trim()],['Rating',$('rlRating').value.trim()],['Rental ID',$('rlRent').value.trim()],['Period',periodLabel(m,h)],['Current SMU',$('rlCur').value],['Previous SMU',$('rlPrev').value],[],
+ ['Date','Time Start','Time Stop','SMU Start','SMU Stop','MW Hours Start','MW Hours Stop','Load kW Min','Load kW Max','Stoppage Customer','Stoppage Generator','Total Downtime','Remarks']];
+ const trs=[...$('rlBody').querySelectorAll('tr')];
+ rowsData().forEach((r,i)=>rows.push([pad2(r.d)+'-'+MON3[+x[2]-1]+'-'+x[1],r.ts,r.te,r.ss,r.se,r.ms,r.me,r.lo,r.hi,r.sc,r.sg,trs[i].querySelector('.td').textContent,r.rm]));
+ rows.push(['TOTAL','','','','','','','','',$('rlTotC').textContent,$('rlTotG').textContent,$('rlTotD').textContent,'']);rows.push([],['TOTAL HOURS',$('rlTotHrs').textContent],['Out of (hours)',$('rlOutOf').textContent],['TOTAL STOPPAGE',$('rlTotStop').textContent]);
+ csvDl('Generation_Report_'+m+(h===1?'_1-15':'_16-end')+'.csv',rows)}
+
+// events
+$('rlBody').addEventListener('input',e=>{const t=e.target;if(t.classList.contains('hmi'))t.classList.remove('bad');
+ if(t.classList.contains('tmi')){let v=t.value.replace(/[^0-9]/g,'').slice(0,4);if(v.length>2)v=v.slice(0,2)+':'+v.slice(2);t.value=v;t.classList.remove('bad')}calc()});
+$('rlBody').addEventListener('change',e=>{const t=e.target;if(t.classList.contains('tmi')){if(t.value&&tMin(t.value)===null)t.classList.add('bad');else t.classList.remove('bad');calc()}
+ if(t.classList.contains('hmi')){const n=normHM(t.value);if(n===null){t.classList.add('bad')}else{t.classList.remove('bad');t.value=n}calc()}});
+$('rlBody').addEventListener('click',e=>{const b=e.target.closest('.rlb');if(!b)return;const tr=b.closest('tr'),d=tr.dataset.d;
+ if(b.dataset.act==='add'){const x=/^(\d{4})-(\d{2})$/.exec($('rlMonth').value);if(!x)return;tr.insertAdjacentHTML('afterend',rowHtml({d:+d},x));fixBtns();calc()}
+ else{if($('rlBody').querySelectorAll('tr[data-d="'+d+'"]').length<2)return;tr.remove();fixBtns();calc()}});
+$('rlMonth').addEventListener('input',showPeriod);
+$('rlMonth').addEventListener('change',()=>openM());
+$('rlHalf').addEventListener('change',()=>openM());
+(function(){const a=$('rlOgr'),h=$('hOgr');a.value=h.value;a.addEventListener('input',()=>{h.value=a.value;try{localStorage.setItem(_hdrKey('hOgr'),a.value)}catch(x){}});h.addEventListener('input',()=>{a.value=h.value})})();
+[['rlModel','hModel'],['rlRating','hRating'],['rlRent','hRent']].forEach(([id,kk])=>{const e=$(id),k=_hdrKey(kk);try{e.value=localStorage.getItem(k)||''}catch(x){}e.addEventListener('input',()=>{try{localStorage.setItem(k,e.value)}catch(x){}})});
+$('rlMonth').value=curM();$('rlHalf').value=new Date().getDate()<=15?'1':'2';openM();
+const setAll=o=>{if(!o||typeof o!=='object')return;Object.assign(logs,o);migrate();persist();renderOld();openM()};
+function mergeRemote(R){let down=0;const up=[];
+ new Set([...Object.keys(logs),...Object.keys(R||{})]).forEach(k=>{const L=logs[k],X=(R||{})[k],lu=L?(L._u||0):-1,xu=X?(X._u||0):-1;if(X&&xu>lu){logs[k]=X;down++}else if(L&&lu>xu)up.push(k)});
+ if(down){persist();renderOld();if($('rlMain').hidden)openM()}return{down,up}}
+return{save,excel,reset,pick,del,sync,syncBtn,mergeRemote,get:()=>logs,set:setAll};
+})();
+
+// ================= Offline + Auto Update =================
+(function(){
+ const verEl=document.createElement('div');verEl.className='note noprint';verEl.style.cssText='text-align:center;padding:12px 8px 20px;opacity:.7';verEl.textContent='App version: '+APP_VERSION;document.body.appendChild(verEl);
+ if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){navigator.serviceWorker.register('sw.js').catch(function(){})}
+ let dirty=false;document.addEventListener('input',function(){dirty=true},true);
+ const remote=window.__APP_REMOTE||'';
+ function bar(text,btn,fn){const old=document.getElementById('updBar');if(old)old.remove();const b=document.createElement('div');b.id='updBar';
+  b.style.cssText='position:fixed;left:10px;right:10px;top:10px;z-index:400;background:#17343a;color:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:center;font-size:14px;box-shadow:0 4px 16px rgba(0,0,0,.35)';
+  b.innerHTML='<span style="flex:1"></span><button style="width:auto;margin:0;padding:8px 14px;background:#ffd166;color:#17343a;font-weight:700;border:0;border-radius:8px"></button>';
+  b.firstChild.textContent=text;b.lastChild.textContent=btn;b.lastChild.onclick=fn;document.body.appendChild(b)}
+ async function apply(text){
+  if(window.__APP_LOADER){window.__APP_LOADER.apply(text);return}
+  try{const rg=await navigator.serviceWorker.getRegistration();if(rg)await rg.update()}catch(e){}
+  location.reload()}
+ let last=0;
+ async function check(){
+  if(!navigator.onLine)return;if(!remote&&location.protocol==='file:')return;
+  if(Date.now()-last<60000)return;last=Date.now();
+  try{const base=remote||new URL('index.html',location.href).href;
+   const r=await fetch(base+(base.indexOf('?')>-1?'&':'?')+'_='+Date.now(),{cache:'no-store'});if(!r.ok)return;
+   const t=await r.text(),m=/APP_VERSION\s*=\s*'([^']+)'/.exec(t);if(!m||m[1]===APP_VERSION)return;
+   const gk='updTried_'+m[1];if(sessionStorage.getItem(gk))return;
+   if(!dirty){sessionStorage.setItem(gk,'1');bar('A new version is available. Updating...','OK',function(){});apply(t)}
+   else bar('A new version is available ('+m[1]+')','Update now',function(){sessionStorage.setItem(gk,'1');apply(t)})
+  }catch(e){}}
+ setTimeout(check,2500);
+ window.addEventListener('online',function(){setTimeout(check,1500)});
+ document.addEventListener('visibilitychange',function(){if(!document.hidden)check()});
+ setInterval(check,30*60*1000);
+})();
+</script>
+</body></html>
