@@ -510,7 +510,7 @@ button{border:0;border-radius:12px;padding:13px;font-size:15px;font-weight:700;c
 <div class="grid" style="margin-top:8px"><div><label>Password (6+)</label><input id="auP" type="text"></div><div><label>Role</label><select id="auR"><option value="operator">Operator</option><option value="manager">Manager (sab dekhe)</option></select></div></div>
 <label style="margin-top:8px">Kaun se engines (operator ke liye)</label><div id="adNewEng"></div><button class="primary" style="width:100%;margin-top:10px" onclick="adCreate()">User banao</button><p class="note" id="auMsg"></p></div>
 </main>
-<script>const APP_VERSION='2026.11.12.12'; // Har update par ye badlo (jaise 2026.11.10.1) taake sab phones auto update ho jayen</script>
+<script>const APP_VERSION='2026.11.12.13'; // Har update par ye badlo (jaise 2026.11.10.1) taake sab phones auto update ho jayen</script>
 <script>
 const FB_URL='https://dgm-fleet-default-rtdb.firebaseio.com',FB_KEY='AIzaSyDwuLu6B-eIFsusBZ-yWrJFCJUx58VkiLg';
 const NOLOGIN=false; // login/admin system ON hai. Band karne ke liye false ki jagah true likho
@@ -526,7 +526,7 @@ const ids=base.concat(CH.map((_,i)=>'cp'+i),CH.map((_,i)=>'cn'+i),CH.map((_,i)=>
 const $=id=>document.getElementById(id);
 const num=id=>{let v=parseFloat($(id).value);return Number.isFinite(v)?v:0};
 const has=id=>$(id).value!=='';
-const today=()=>new Date().toISOString().slice(0,10);
+const today=()=>{const n=new Date();return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')};   // local date (raat 12 se 12 tak ka din)
 let reports=JSON.parse(localStorage.getItem(K('dprReports'))||'{}');
 function chemRender(){$('ch').innerHTML=CH.map((n,i)=>`<div class="chem"><input class="chn" id="chn${i}" type="text" placeholder="Chemical name"><div class="g3"><div><label>Previous</label><input id="cp${i}" type="number" step="any"></div><div><label>Present</label><input id="cn${i}" type="number" step="any"></div><div><label>Consumption</label><input id="cu${i}" type="number" step="any"></div></div></div>`).join('');showChem();CH.forEach((n,i)=>{$('chn'+i).oninput=()=>{CH[i]=$('chn'+i).value;saveChem();};});}
 function mins(s){let m=String(s||'').match(/^(\d{1,3}):?(\d{2})$/);return m?+m[1]*60+ +m[2]:0;}
