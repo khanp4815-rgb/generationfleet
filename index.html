@@ -510,7 +510,7 @@ button{border:0;border-radius:12px;padding:13px;font-size:15px;font-weight:700;c
 <div class="grid" style="margin-top:8px"><div><label>Password (6+)</label><input id="auP" type="text"></div><div><label>Role</label><select id="auR"><option value="operator">Operator</option><option value="manager">Manager (sab dekhe)</option></select></div></div>
 <label style="margin-top:8px">Kaun se engines (operator ke liye)</label><div id="adNewEng"></div><button class="primary" style="width:100%;margin-top:10px" onclick="adCreate()">User banao</button><p class="note" id="auMsg"></p></div>
 </main>
-<script>const APP_VERSION='2026.11.12.13'; // Har update par ye badlo (jaise 2026.11.10.1) taake sab phones auto update ho jayen</script>
+<script>const APP_VERSION='2026.11.13.2'; // Har update par ye badlo (jaise 2026.11.10.1) taake sab phones auto update ho jayen</script>
 <script>
 const FB_URL='https://dgm-fleet-default-rtdb.firebaseio.com',FB_KEY='AIzaSyDwuLu6B-eIFsusBZ-yWrJFCJUx58VkiLg';
 const NOLOGIN=false; // login/admin system ON hai. Band karne ke liye false ki jagah true likho
@@ -1795,7 +1795,43 @@ function exportDGR(){
  var stp=stops();
  if(!stp.length){try{var q2=function(x){var q=/^(\d{1,2}):(\d{2})$/.exec(String(x||''));return q?+q[1]*60+ +q[2]:0};stp=scEntriesFor(d).map(function(e){var mi=(e.mins!==undefined&&e.mins!==''&&isFinite(Number(e.mins)))?Number(e.mins):(q2(e.start)-q2(e.stop)+1440)%1440;return {r:e.reason||'',a:e.stop,b:e.start,d:hhmm(mi)}})}catch(e){stp=[]}}
  var D={date:d,v:v,stops:stp,remarks:$('remarks').value,ch:CH.map(function(_,i){return {p:$('cp'+i).value,n:$('cn'+i).value,u:$('cu'+i).value}})};
- dl('DGR_'+d+'.xlsx',dgrXlsx(D))}
+ dgrDeliver(D)}
+// ----- DGR: APK me phone ke browser se download (browser blob download sahi karta hai) -----
+// Link me sirf report ka chhota data jata hai (file nahi), browser us se file khud banata hai.
+function dgrEnc(D){return btoa(unescape(encodeURIComponent(JSON.stringify(D)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function dgrDec(t){t=t.replace(/-/g,'+').replace(/_/g,'/');while(t.length%4)t+='=';return JSON.parse(decodeURIComponent(escape(atob(t))))}
+function dgrBase(){var u='';try{if(/^https?:$/.test(location.protocol))u=location.href.split('#')[0].split('?')[0]}catch(e){}
+ if(!u&&window.__APP_REMOTE)u=String(window.__APP_REMOTE).split('#')[0].split('?')[0];
+ if(!u){try{u=localStorage.getItem('dlBase')||''}catch(e){}}return u}
+function dgrDeliver(D){var name='DGR_'+D.date+'.xlsx';if(!isApp()){dl(name,dgrXlsx(D));return}dgrSheet(D,name)}
+function dgrSheet(D,name){
+ var old=document.getElementById('dgSheet');if(old)old.remove();
+ var d=document.createElement('div');d.id='dgSheet';d.className='noprint';
+ d.style.cssText='position:fixed;left:0;right:0;bottom:0;z-index:99999;background:#123b45;color:#fff;border-radius:16px 16px 0 0;padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));box-shadow:0 -6px 24px #0007;font-size:14px';
+ var bs='display:block;width:100%;box-sizing:border-box;margin:8px 0 0;padding:12px;border:0;border-radius:10px;font-weight:700;font-size:15px;text-align:center;text-decoration:none;color:#fff;';
+ function draw(){var base=dgrBase(),h='<div style="font-weight:700;font-size:16px">Company Format (DGR)</div><div style="opacity:.85;margin-top:2px">Date: '+D.date+' &middot; file browser se download hogi</div>';
+  if(!base){h+='<div style="margin-top:10px;font-weight:300">Pehle apne app ka web link (GitHub Pages) ek baar likhein:</div><input id="dgUrl" type="url" placeholder="https://aapkanaam.github.io/repo/index.html" style="width:100%;box-sizing:border-box;margin-top:6px;padding:11px;border-radius:10px;border:0;font-size:15px"><button id="dgSave" style="'+bs+'background:#2e7d32">Link save karein</button>'}
+  else{var link=base+'?dgr='+dgrEnc(D);
+   h+='<div style="margin:10px 0 2px;font-weight:300;line-height:1.5">1. Neeche button dabayein (link copy hoga)<br>2. Phone ka browser (Chrome) kholein<br>3. Address bar me paste karein aur Go dabayein</div>';
+   h+='<button id="dgCopy" style="'+bs+'background:#2e7d32;font-size:17px;padding:15px">Link copy karein</button>';
+   d._link=link}
+  h+='<button id="dgClose" style="'+bs+'background:transparent;font-weight:400;opacity:.8">Band karein</button>';
+  d.innerHTML=h;
+  var q=function(i){return document.getElementById(i)};
+  if(q('dgSave'))q('dgSave').onclick=function(){var v=(q('dgUrl').value||'').trim();if(!/^https?:\/\//i.test(v)){alert('Sahi link likhein (https:// se shuru).');return}try{localStorage.setItem('dlBase',v.split('#')[0].split('?')[0])}catch(e){}draw()};
+  if(q('dgCopy'))q('dgCopy').onclick=function(){var t=d._link,ok=function(){q('dgCopy').textContent='Copy ho gaya - ab browser me paste karein';q('dgCopy').style.background='#1d5d63'};
+   function fb(){var a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){alert('Copy nahi hua')}a.remove()}
+   try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,fb);return}}catch(e){}fb()};
+  if(q('dgClose'))q('dgClose').onclick=function(){d.remove()}}
+ document.body.appendChild(d);draw()}
+// Browser me jab ?dgr=... wala link khule: file tayyar karke download karo
+(function(){var m=/[?&]dgr=([^&#]+)/.exec(location.search);if(!m)return;var D;try{D=dgrDec(m[1])}catch(e){return}
+ var name='DGR_'+(D.date||'report')+'.xlsx',o=document.createElement('div');
+ o.style.cssText='position:fixed;inset:0;z-index:2147483647;background:#eaf0ee;display:flex;align-items:center;justify-content:center;padding:20px;font-family:Arial,sans-serif';
+ o.innerHTML='<div style="background:#fff;border-radius:16px;padding:24px;max-width:420px;width:100%;text-align:center;box-shadow:0 6px 24px #0002"><div style="font-size:20px;font-weight:700;color:#123b45">Company Format (DGR)</div><div style="margin:6px 0 18px;color:#44546a">Date: '+String(D.date||'').replace(/[<>&"]/g,'')+'</div><button id="dgGo" style="width:100%;padding:15px;border:0;border-radius:12px;background:#2e7d32;color:#fff;font-size:17px;font-weight:700">Download DGR file</button><div id="dgMsg" style="margin-top:14px;color:#60767b;font-size:13px">Download shuru ho raha hai... na ho to upar button dabayein.</div></div>';
+ document.body.appendChild(o);
+ var go=function(){try{dl(name,dgrXlsx(D));document.getElementById('dgMsg').textContent='File download ho gayi. Downloads folder me dekhein.'}catch(e){document.getElementById('dgMsg').textContent='Error: '+e}};
+ document.getElementById('dgGo').onclick=go;setTimeout(go,500)})();
 </script>
 <script>
 // Stoppage "Reason": compact patli list (select ke options se khud banti hai; naye option add karne par khud dikhte hain)
