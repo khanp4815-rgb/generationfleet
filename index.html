@@ -65,8 +65,16 @@ button{border:0;border-radius:12px;padding:13px;font-size:15px;font-weight:700;c
 #scMain .kwin input:focus{outline:none;background:#eaf4f1}
 #scMain .kwin input::placeholder{font-weight:300;color:#9aabae}
 #scMain .kwnote{font-size:11px;color:#60767b;margin:5px 2px 0;text-align:center;font-weight:300}
-#scMain #scReason,#scMain #scReasonText{font-family:Roboto,"Segoe UI",system-ui,-apple-system,sans-serif;font-weight:300;font-size:17px;letter-spacing:.2px;color:#44546a}
+#scMain #scReason,#scMain #scReasonText{font-family:Roboto,"Segoe UI",system-ui,-apple-system,sans-serif;font-weight:700;font-size:17px;letter-spacing:.2px;color:#44546a}
 #scMain #scReason option{font-weight:300}
+#scMain #scReason{display:none}
+#scMain .rsbtn{width:100%;margin:0;display:flex;align-items:center;justify-content:space-between;padding:12px;font-size:16px;font-weight:700;text-align:left;border:1px solid #b8c2cc;border-radius:8px;background:#fff;color:#44546a;font-family:Roboto,"Segoe UI",system-ui,-apple-system,sans-serif}
+#scMain .rsbtn .sel{color:#183238;font-weight:700}
+#scMain .rsbtn .car{opacity:.55;margin-left:8px}
+#scMain .rslist{margin-top:4px;border:1px solid #d8e3e0;border-radius:10px;background:#fff;max-height:46vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#scMain .rsi{padding:7px 12px;font-size:15px;font-weight:700;line-height:1.25;color:#2b3f47;border-bottom:1px solid #eef3f2;font-family:Roboto,"Segoe UI",system-ui,-apple-system,sans-serif}
+#scMain .rsi:last-child{border-bottom:0}
+#scMain .rsi.on{background:#eaf4f1;font-weight:700;color:#123b45}
 #scMain #scReasonText::placeholder{font-weight:300}
 #scMain .b-clear{background:#c62828}
 #scMain .result{text-align:center;font-size:22px;font-weight:bold;padding:12px;margin-top:12px;border-radius:8px;background:#e8f1fb;color:#1f4e79}
@@ -447,6 +455,8 @@ button{border:0;border-radius:12px;padding:13px;font-size:15px;font-weight:700;c
       <option>Gas prop valve Gas pre-press</option>
       <option value="__other__">Other (type manually)...</option>
     </select>
+    <button type="button" id="scReasonBtn" class="rsbtn"><span id="scReasonLbl">-- Select reason --</span><span class="car">&#9662;</span></button>
+    <div id="scReasonList" class="rslist" hidden></div>
     <input type="text" id="scReasonText" placeholder="Enter reason" style="display:none;margin-top:8px" autocomplete="off">
 
     <div class="totalbox"><small id="scGrandLbl">Total Stoppage (Today)</small><span id="scGrand">0 hr 0 min</span></div>
@@ -455,7 +465,7 @@ button{border:0;border-radius:12px;padding:13px;font-size:15px;font-weight:700;c
 
   <div class="card">
     <h3>Message</h3>
-    <textarea id="scMsg" rows="9" style="width:100%;padding:12px;font-size:16px;border:1px solid #b8c2cc;border-radius:8px;font-family:Arial,sans-serif"></textarea>
+    <textarea id="scMsg" rows="9" style="width:100%;padding:12px;font-size:16px;font-weight:700;border:1px solid #b8c2cc;border-radius:8px;font-family:Arial,sans-serif"></textarea>
     <button class="b-add" style="background:#1f4e79" onclick="SC.copyMsg()" id="scCopyBtn">Copy Message</button>
   </div>
 
@@ -500,7 +510,7 @@ button{border:0;border-radius:12px;padding:13px;font-size:15px;font-weight:700;c
 <div class="grid" style="margin-top:8px"><div><label>Password (6+)</label><input id="auP" type="text"></div><div><label>Role</label><select id="auR"><option value="operator">Operator</option><option value="manager">Manager (sab dekhe)</option></select></div></div>
 <label style="margin-top:8px">Kaun se engines (operator ke liye)</label><div id="adNewEng"></div><button class="primary" style="width:100%;margin-top:10px" onclick="adCreate()">User banao</button><p class="note" id="auMsg"></p></div>
 </main>
-<script>const APP_VERSION='2026.11.12.9'; // Har update par ye badlo (jaise 2026.11.10.1) taake sab phones auto update ho jayen</script>
+<script>const APP_VERSION='2026.11.12.12'; // Har update par ye badlo (jaise 2026.11.10.1) taake sab phones auto update ho jayen</script>
 <script>
 const FB_URL='https://dgm-fleet-default-rtdb.firebaseio.com',FB_KEY='AIzaSyDwuLu6B-eIFsusBZ-yWrJFCJUx58VkiLg';
 const NOLOGIN=false; // login/admin system ON hai. Band karne ke liye false ki jagah true likho
@@ -590,13 +600,35 @@ function sheet(title,note,build){
  const add=(t,fn,bg)=>{const q=document.createElement('button');q.textContent=t;q.style.cssText='width:100%;margin:0;padding:13px;border:0;border-radius:10px;font-size:15px;font-weight:700;color:#fff;background:'+(bg||'#1f6f6b');q.onclick=fn;opts.appendChild(q)};
  build(add,msg,bx);add('Close',()=>ov.remove(),'#888');document.body.appendChild(ov);
 }
+// ===== Download: APK builder ke hisab se kai tareeqe; jo kaam kare wahi yaad rakhta hai =====
+var DL_M=['blob','data','open','frame','share'];
+function dlRun(m,name,blob){
+ try{
+  if(m==='data'){const r=new FileReader();r.onload=()=>{try{const a=document.createElement('a');a.href=r.result;a.download=name;a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>a.remove(),800)}catch(e){alert('Download error: '+e)}};r.readAsDataURL(blob);return}
+  if(m==='share'){const f=new File([blob],name,{type:blob.type||'application/octet-stream'});
+   if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:name}).catch(()=>{})}else alert('Is app me Share support nahi hai. Dusra tareeqa try karein.');return}
+  const u=URL.createObjectURL(blob);
+  if(m==='open'){window.open(u,'_blank')}
+  else if(m==='frame'){const f=document.createElement('iframe');f.style.display='none';f.src=u;document.body.appendChild(f);setTimeout(()=>f.remove(),5000)}
+  else{const a=document.createElement('a');a.href=u;a.download=name;a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>a.remove(),800)}
+  setTimeout(()=>URL.revokeObjectURL(u),120000);
+ }catch(e){alert('Download error: '+e)}}
+function dlHint(name,blob,i){
+ const old=document.getElementById('dlHint');if(old)old.remove();
+ const d=document.createElement('div');d.id='dlHint';d.className='noprint';
+ d.style.cssText='position:fixed;left:10px;right:10px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:99999;background:#123b45;color:#fff;border-radius:14px;padding:12px;box-shadow:0 6px 22px #0006;font-size:14px;max-width:460px;margin:0 auto';
+ d.innerHTML='<div style="margin-bottom:8px;font-weight:600">File download hui? <span style="font-weight:300;opacity:.8">(tareeqa '+(i+1)+'/'+DL_M.length+')</span></div><div style="display:flex;gap:8px"><button id="dlYes" style="flex:1;margin:0;padding:10px;border:0;border-radius:10px;background:#2e7d32;color:#fff;font-weight:700">Haan, mil gayi</button><button id="dlNo" style="flex:1;margin:0;padding:10px;border:0;border-radius:10px;background:#c77d12;color:#fff;font-weight:700">Nahi, dusra tareeqa</button></div>';
+ document.body.appendChild(d);
+ document.getElementById('dlYes').onclick=()=>{try{localStorage.setItem('dlM',String(i));localStorage.setItem('dlOk','1')}catch(e){}d.remove()};
+ document.getElementById('dlNo').onclick=()=>{const n=(i+1)%DL_M.length;try{localStorage.setItem('dlM',String(n))}catch(e){}dlRun(DL_M[n],name,blob);dlHint(name,blob,n)};
+ setTimeout(()=>{if(d.parentNode)d.remove()},30000)}
 function dl(name,blob){
  if(window.Android&&Android.saveFile){let r=new FileReader();r.onload=()=>{try{Android.saveFile(name,blob.type||'application/octet-stream',String(r.result).split(',')[1]);}catch(e){alert('Save error: '+e);}};r.readAsDataURL(blob);return;}
  if(!isApp()){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);return}
- // APK: seedha file download (koi copy / share / other-way menu nahi)
- const r=new FileReader();r.onload=()=>{
-  try{const a=document.createElement('a');a.href=r.result;a.download=name;a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>a.remove(),800)}catch(e){alert('Download error: '+e)}};
- r.readAsDataURL(blob);
+ let i=0,ok='';try{i=parseInt(localStorage.getItem('dlM')||'0')||0;ok=localStorage.getItem('dlOk')||''}catch(e){}
+ if(i<0||i>=DL_M.length)i=0;
+ dlRun(DL_M[i],name,blob);
+ if(ok!=='1')dlHint(name,blob,i);
 }
 function appPrint(){
  if(window.Android&&Android.printPage){Android.printPage();return}
@@ -1099,6 +1131,7 @@ function addEntry() {
   document.getElementById('scMin').value = '';
   document.getElementById('scMax').value = '';
   document.getElementById('scReason').value = '';
+  if (window.scReasonSync) scReasonSync();
   document.getElementById('scReasonText').value = '';
   document.getElementById('scReasonText').style.display = 'none';
   render();
@@ -1763,6 +1796,20 @@ function exportDGR(){
  if(!stp.length){try{var q2=function(x){var q=/^(\d{1,2}):(\d{2})$/.exec(String(x||''));return q?+q[1]*60+ +q[2]:0};stp=scEntriesFor(d).map(function(e){var mi=(e.mins!==undefined&&e.mins!==''&&isFinite(Number(e.mins)))?Number(e.mins):(q2(e.start)-q2(e.stop)+1440)%1440;return {r:e.reason||'',a:e.stop,b:e.start,d:hhmm(mi)}})}catch(e){stp=[]}}
  var D={date:d,v:v,stops:stp,remarks:$('remarks').value,ch:CH.map(function(_,i){return {p:$('cp'+i).value,n:$('cn'+i).value,u:$('cu'+i).value}})};
  dl('DGR_'+d+'.xlsx',dgrXlsx(D))}
+</script>
+<script>
+// Stoppage "Reason": compact patli list (select ke options se khud banti hai; naye option add karne par khud dikhte hain)
+(function(){
+ var sel=document.getElementById('scReason'),btn=document.getElementById('scReasonBtn'),lbl=document.getElementById('scReasonLbl'),box=document.getElementById('scReasonList');
+ if(!sel||!btn)return;
+ function build(){box.innerHTML='';[].forEach.call(sel.options,function(o){if(o.value==='')return;var d=document.createElement('div');d.className='rsi';d.dataset.v=o.value;d.textContent=o.value==='__other__'?'Other (type manually)...':o.text;
+  d.onclick=function(){sel.value=d.dataset.v;sel.dispatchEvent(new Event('change'));sync();box.hidden=true};box.appendChild(d)})}
+ function sync(){lbl.textContent=!sel.value?'-- Select reason --':(sel.value==='__other__'?'Other (type manually)...':sel.options[sel.selectedIndex].text);lbl.className=sel.value?'sel':'';
+  [].forEach.call(box.children,function(c){c.classList.toggle('on',c.dataset.v===sel.value)})}
+ btn.onclick=function(){box.hidden=!box.hidden;if(!box.hidden){sync();try{box.scrollIntoView({block:'nearest'})}catch(e){}}};
+ document.addEventListener('click',function(e){if(!box.hidden&&!box.contains(e.target)&&!btn.contains(e.target))box.hidden=true});
+ build();sync();window.scReasonSync=sync;
+})();
 </script>
 
 </body></html>
